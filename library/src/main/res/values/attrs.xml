@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WatermarkView">
+        <attr name="watermark" format="reference" />
+        <attr name="position" format="enum">
+            <enum name="visa" value="0" />
+            <enum name="mastercard" value="1" />
+            <enum name="american_express" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>
