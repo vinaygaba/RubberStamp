@@ -148,7 +148,7 @@ public class WatermarkView2 {
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(srcBitmap, 0, 0, null);
         getWatermarkCoordinates(pos, srcWidth, srcHeight);
-        canvas.drawBitmap(watermarkBitmap,x,y,null);
+        canvas.drawBitmap(watermarkBitmap,x,y-watermarkHeight,null);
 
         Log.e("X", x + "");
         Log.e("Y", y + "");
@@ -215,15 +215,15 @@ public class WatermarkView2 {
 
             case BOTTOMLEFT:
                 x = 0;
-                y = srcHeight - watermarkHeight;
+                y = srcHeight;
                 break;
             case BOTTOMCENTER:
                 x = (srcWidth / 2) - (watermarkWidth / 2);
-                y = srcHeight - watermarkHeight;
+                y = srcHeight ;
                 break;
             case BOTTOMRIGHT:
                 x = srcWidth - watermarkWidth;
-                y = srcHeight - watermarkHeight;
+                y = srcHeight;
                 break;
 
             default:
