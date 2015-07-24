@@ -29,4 +29,9 @@ dependencies {
 
 Usage
 ------
-Using RubberStamp is extremely easy.
+Using RubberStamp is extremely easy. You can use it in the following manner:
+
+```java
+RubberStamp rubberStamp = new RubberStamp(this);
+
+```
