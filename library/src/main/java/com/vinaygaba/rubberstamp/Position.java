@@ -1,4 +1,4 @@
-package com.vinaygaba.watermarkview;
+package com.vinaygaba.rubberstamp;
 
 /**
  * Created by vinay on 7/24/2015.

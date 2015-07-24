@@ -1,16 +1,24 @@
-package com.vinaygaba.watermarkview;
+package com.vinaygaba.rubberstamp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        imageView = (ImageView)findViewById(R.id.imageView);
+        Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                R.drawable.card);
+
     }
 
     @Override
