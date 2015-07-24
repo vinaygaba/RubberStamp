@@ -32,12 +32,7 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 public class WatermarkView2 {
-
-    public enum Position {
-        TOPLEFT, TOPCENTER, TOPRIGHT, MIDDLELEFT, MIDDLECENTER, MIDDLERIGHT, BOTTOMLEFT, BOTTOMCENTER, BOTTOMRIGHT
-    }
-
-
+    
     static Context mContext;
     private int x;
     private int y;
@@ -50,13 +45,13 @@ public class WatermarkView2 {
         mContext = context;
     }
 
-    public Bitmap addWatermark(Bitmap src, String watermark,Position pos) {
+    public Bitmap addWatermark(Bitmap src, String watermark,int size,int color,Position pos) {
         srcWidth = src.getWidth();
         Log.e("Src Width",srcWidth+"");
         srcHeight = src.getHeight();
         Log.e("Src Height",srcHeight+"");
         Rect bounds = new Rect();
-        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT, Color.BLACK, Shader.TileMode.CLAMP);
+        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT, color, Shader.TileMode.CLAMP);
 
         Bitmap result = Bitmap.createBitmap(srcWidth, srcHeight, src.getConfig());
 
@@ -64,8 +59,7 @@ public class WatermarkView2 {
         canvas.drawBitmap(src, 0, 0, null);
 
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(50);
+        paint.setTextSize(size);
         paint.getTextBounds(watermark,0,watermark.length(),bounds);
         watermarkHeight=bounds.height();
         Log.e("Watermark Height",watermarkHeight+"");
@@ -86,7 +80,7 @@ public class WatermarkView2 {
         return result;
     }
 
-    public Bitmap addWatermark(int src, String watermark,Position pos) {
+    public Bitmap addWatermark(int src, String watermark,int size,int color,Position pos) {
 
         Bitmap srcBitmap = BitmapFactory.decodeResource(mContext.getResources(),
                 src);
@@ -96,7 +90,7 @@ public class WatermarkView2 {
         srcHeight = srcBitmap.getHeight();
         Log.e("Src Height",srcHeight+"");
         Rect bounds = new Rect();
-        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT, Color.BLACK, Shader.TileMode.CLAMP);
+        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT, color, Shader.TileMode.CLAMP);
 
         Bitmap result = Bitmap.createBitmap(srcWidth, srcHeight, srcBitmap.getConfig());
 
@@ -104,8 +98,7 @@ public class WatermarkView2 {
         canvas.drawBitmap(srcBitmap, 0, 0, null);
 
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(50);
+        paint.setTextSize(size);
         paint.getTextBounds(watermark,0,watermark.length(),bounds);
         watermarkHeight=bounds.height();
         Log.e("Watermark Height",watermarkHeight+"");
@@ -224,6 +217,11 @@ public class WatermarkView2 {
             case BOTTOMRIGHT:
                 x = srcWidth - watermarkWidth;
                 y = srcHeight;
+                break;
+
+            case DIAGONAL:
+                x=0;
+                y=srcHeight;
                 break;
 
             default:

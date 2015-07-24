@@ -1,0 +1,8 @@
+package com.vinaygaba.watermarkview;
+
+/**
+ * Created by vinay on 7/24/2015.
+ */
+public enum Position {
+    TOPLEFT, TOPCENTER, TOPRIGHT, MIDDLELEFT, MIDDLECENTER, MIDDLERIGHT, BOTTOMLEFT, BOTTOMCENTER, BOTTOMRIGHT, DIAGONAL
+}

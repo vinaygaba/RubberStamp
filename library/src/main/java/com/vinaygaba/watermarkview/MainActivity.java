@@ -18,8 +18,7 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.imageView);
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.card);
-        WatermarkView2 watermarkView2 = new WatermarkView2(this);
-        imageView.setImageBitmap(watermarkView2.addWatermark(icon,"Test", WatermarkView2.Position.BOTTOMCENTER));
+
     }
 
     @Override
