@@ -1,29 +1,22 @@
 package com.vinaygaba.rubberstamp;
 
-import android.support.annotation.IntDef;
 import android.util.Pair;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMCENTER;
+import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMLEFT;
+import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMRIGHT;
+import static com.vinaygaba.rubberstamp.RubberStamp.DIAGONAL;
+import static com.vinaygaba.rubberstamp.RubberStamp.CENTER;
+import static com.vinaygaba.rubberstamp.RubberStamp.MIDDLELEFT;
+import static com.vinaygaba.rubberstamp.RubberStamp.MIDDLERIGHT;
+import static com.vinaygaba.rubberstamp.RubberStamp.TOPCENTER;
+import static com.vinaygaba.rubberstamp.RubberStamp.TOPLEFT;
+import static com.vinaygaba.rubberstamp.RubberStamp.TOPRIGHT;
 
 public class PositionCalculator {
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({TOPLEFT, TOPCENTER, TOPRIGHT, MIDDLELEFT, MIDDLECENTER, MIDDLERIGHT, BOTTOMLEFT,
-            BOTTOMCENTER, BOTTOMRIGHT, DIAGONAL})
-    public @interface Location {}
 
-    public static final int TOPLEFT = 0;
-    public static final int TOPCENTER = 1;
-    public static final int TOPRIGHT = 2;
-    public static final int MIDDLELEFT = 3;
-    public static final int MIDDLECENTER = 4;
-    public static final int MIDDLERIGHT = 5;
-    public static final int BOTTOMLEFT = 6;
-    public static final int BOTTOMCENTER = 7;
-    public static final int BOTTOMRIGHT = 8;
-    public static final int DIAGONAL = 9;
 
-    public static Pair<Integer, Integer> getCoordinates(@Location int location,
+    public static Pair<Integer, Integer> getCoordinates(@RubberStamp.RubberStampPosition int location,
                                                         int bitmapWidth, int bitmapHeight,
                                                         int rubberstampWidth, int rubberstampHeight) {
         switch(location){
@@ -40,7 +33,7 @@ public class PositionCalculator {
             case MIDDLELEFT:
                 return new Pair<>(0, (bitmapHeight / 2) - (rubberstampHeight / 2));
 
-            case MIDDLECENTER:
+            case CENTER:
                 return new Pair<>((bitmapWidth / 2) - (rubberstampWidth / 2),
                         (bitmapHeight / 2) - (rubberstampHeight / 2));
             case MIDDLERIGHT:
