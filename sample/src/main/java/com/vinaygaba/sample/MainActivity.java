@@ -3,14 +3,15 @@ package com.vinaygaba.sample;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.vinaygaba.rubberstamp.Position;
 import com.vinaygaba.rubberstamp.RubberStamp;
+import com.vinaygaba.rubberstamp.RubberStampConfig;
+import com.vinaygaba.rubberstamp.RubberStampConfig.RubberStampConfigBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,8 +24,15 @@ public class MainActivity extends AppCompatActivity {
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.card);
        RubberStamp rubberStamp = new RubberStamp(this);
-        //imageView.setImageBitmap(rubberStamp.addStamp(R.drawable.flower,R.drawable.instagram, 1000,250,Position.DIAGONAL));
-        imageView.setImageBitmap(rubberStamp.addStamp(icon,"Test",50, Color.parseColor("#FFFFFF"),"", Position.BOTTOMRIGHT));
+       RubberStampConfig config = new RubberStampConfigBuilder()
+               .rubberStampString("Test")
+               .bitmap(icon)
+               .size(50)
+               .color(Color.parseColor("#FFFFFF"))
+               .rubberStampPosition(RubberStamp.BOTTOMRIGHT)
+               .build();
+
+        imageView.setImageBitmap(rubberStamp.addStamp(config));
     }
 
     @Override

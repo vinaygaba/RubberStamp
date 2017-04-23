@@ -28,98 +28,93 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
-import android.util.Log;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IntDef;
+import android.text.TextUtils;
+import android.util.Pair;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 public class RubberStamp {
 
     static Context mContext;
-    private int x;
-    private int y;
-    private int srcWidth;
-    private int srcHeight;
-    private int rubberstampWidth;
-    private int rubberstampHeight;
+    private int mSrcWidth;
+    private int mSrcHeight;
+    private int mRubberstampWidth;
+    private int mRubberstampHeight;
 
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({TOPLEFT, TOPCENTER, TOPRIGHT, MIDDLELEFT, CENTER, MIDDLERIGHT, BOTTOMLEFT,
+            BOTTOMCENTER, BOTTOMRIGHT, DIAGONAL})
+    public @interface RubberStampPosition {}
+
+    public static final int TOPLEFT = 0;
+    public static final int TOPCENTER = 1;
+    public static final int TOPRIGHT = 2;
+    public static final int MIDDLELEFT = 3;
+    public static final int CENTER = 4;
+    public static final int MIDDLERIGHT = 5;
+    public static final int BOTTOMLEFT = 6;
+    public static final int BOTTOMCENTER = 7;
+    public static final int BOTTOMRIGHT = 8;
+    public static final int DIAGONAL = 9;
+    
     public RubberStamp(Context context){
         mContext = context;
     }
 
-    public Bitmap addStamp(Bitmap src, String rubberstamp,int size,int color,String typeFacePath,Position pos) {
-        srcWidth = src.getWidth();
-        srcHeight = src.getHeight();
+    public Bitmap addStamp(RubberStampConfig config) {
+        Bitmap baseBitmap = config.getBaseBitmap();
+        @DrawableRes int drawable = config.getBaseDrawable();
+
+        if (baseBitmap == null) {
+            baseBitmap = BitmapFactory.decodeResource(mContext.getResources(), drawable);
+            if (baseBitmap == null) return null;
+        }
+
+        mSrcWidth = baseBitmap.getWidth();
+        mSrcHeight = baseBitmap.getHeight();
 
         Rect bounds = new Rect();
-        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT, color, Shader.TileMode.CLAMP);
+        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT,
+                config.getColor(), Shader.TileMode.CLAMP);
 
-        Bitmap result = Bitmap.createBitmap(srcWidth, srcHeight, src.getConfig());
+        Bitmap result = Bitmap.createBitmap(mSrcWidth, mSrcHeight, baseBitmap.getConfig());
 
         Canvas canvas = new Canvas(result);
-        canvas.drawBitmap(src, 0, 0, null);
+        canvas.drawBitmap(baseBitmap, 0, 0, null);
 
         Paint paint = new Paint();
-        paint.setTextSize(size);
+        paint.setTextSize(config.getSize());
 
-        if(typeFacePath != null && typeFacePath!="") {
+        String typeFacePath = config.getTypeFacePath();
+        if(!TextUtils.isEmpty(typeFacePath)) {
             Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), typeFacePath);
             paint.setTypeface(typeface);
         }
-        paint.getTextBounds(rubberstamp,0,rubberstamp.length(),bounds);
-        rubberstampHeight=bounds.height();
-        rubberstampWidth=bounds.width();
+
+        String rubberStampString = config.getRubberStampString();
+        paint.getTextBounds(rubberStampString,0,rubberStampString.length(),bounds);
+        mRubberstampHeight = bounds.height();
+        mRubberstampWidth = bounds.width();
 
         paint.setAntiAlias(true);
         paint.setShader(shader);
         paint.setUnderlineText(false);
 
-        getRubberStampCoordinates(pos, srcWidth, srcHeight);
+        Pair<Integer, Integer> pair = PositionCalculator
+                .getCoordinates(config.getRubberStampPosition(),
+                        mSrcWidth, mSrcHeight,
+                        mRubberstampWidth, mRubberstampHeight);
 
-        canvas.drawText(rubberstamp,x , y, paint);
-
-        return result;
-    }
-
-    public Bitmap addStamp(int src, String watermark,int size,int color,String typeFacePath,Position pos) {
-
-        Bitmap srcBitmap = BitmapFactory.decodeResource(mContext.getResources(),
-                src);
-
-        srcWidth = srcBitmap.getWidth();
-        srcHeight = srcBitmap.getHeight();
-
-
-        Rect bounds = new Rect();
-        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT, color, Shader.TileMode.CLAMP);
-
-        Bitmap result = Bitmap.createBitmap(srcWidth, srcHeight, srcBitmap.getConfig());
-
-        Canvas canvas = new Canvas(result);
-        canvas.drawBitmap(srcBitmap, 0, 0, null);
-
-        Paint paint = new Paint();
-        paint.setTextSize(size);
-
-        if(typeFacePath != null && typeFacePath!="") {
-            Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), typeFacePath);
-            paint.setTypeface(typeface);
-        }
-
-        paint.getTextBounds(watermark,0,watermark.length(),bounds);
-
-        rubberstampHeight=bounds.height();
-        rubberstampWidth=bounds.width();
-
-        paint.setAntiAlias(true);
-        paint.setShader(shader);
-        paint.setUnderlineText(false);
-
-        getRubberStampCoordinates(pos, srcWidth, srcHeight);
-
-        canvas.drawText(watermark, x, y, paint);
+        canvas.drawText(rubberStampString, pair.first , pair.second, paint);
 
         return result;
     }
 
-    public Bitmap addStamp(int src, int rubberstamp,int wMarkWidth,int wMarkHeight,Position pos) {
+    public Bitmap addStamp(int src, int rubberstamp, int wMarkWidth, int wMarkHeight,
+                           @RubberStampPosition int pos) {
 
         Bitmap srcBitmap = BitmapFactory.decodeResource(mContext.getResources(),
                 src);
@@ -129,19 +124,21 @@ public class RubberStamp {
 
         Bitmap watermarkBitmap = getResizedBitmap(tempWatermarkBitmap,wMarkHeight,wMarkWidth);
 
-        srcWidth = srcBitmap.getWidth();
-        srcHeight = srcBitmap.getHeight();
+        mSrcWidth = srcBitmap.getWidth();
+        mSrcHeight = srcBitmap.getHeight();
 
-        rubberstampHeight=watermarkBitmap.getHeight();
-        rubberstampWidth=watermarkBitmap.getWidth();
+        mRubberstampHeight = watermarkBitmap.getHeight();
+        mRubberstampWidth = watermarkBitmap.getWidth();
 
 
-        Bitmap result = Bitmap.createBitmap(srcWidth, srcHeight, srcBitmap.getConfig());
+        Bitmap result = Bitmap.createBitmap(mSrcWidth, mSrcHeight, srcBitmap.getConfig());
 
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(srcBitmap, 0, 0, null);
-        getRubberStampCoordinates(pos, srcWidth, srcHeight);
-        canvas.drawBitmap(watermarkBitmap,x,y-rubberstampHeight,null);
+        Pair<Integer, Integer> pair = PositionCalculator.getCoordinates(pos,
+                mSrcWidth, mSrcHeight, mRubberstampWidth, mRubberstampHeight);
+        canvas.drawBitmap(watermarkBitmap,pair.first,pair.second - mRubberstampHeight,
+                null);
 
         return result;
     }
@@ -156,64 +153,10 @@ public class RubberStamp {
 
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleHeight);
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix,
+                false);
 
         return resizedBitmap;
-
-    }
-
-    public void getRubberStampCoordinates(Position pos,int w,int h){
-
-        switch(pos){
-
-            case TOPLEFT:
-                x = 0;
-                y = rubberstampHeight;
-                break;
-            case TOPCENTER:
-                x = (srcWidth / 2) - (rubberstampWidth / 2);
-                y = rubberstampHeight;
-                break;
-            case TOPRIGHT:
-                x = srcWidth - rubberstampWidth;
-                y = rubberstampHeight;
-                break;
-
-            case MIDDLELEFT:
-                x = 0;
-                y = (srcHeight / 2) - (rubberstampHeight / 2);
-                break;
-            case MIDDLECENTER:
-                x = (srcWidth / 2) - (rubberstampWidth / 2);
-                y = (srcHeight / 2) - (rubberstampHeight / 2);
-                break;
-            case MIDDLERIGHT:
-                x = srcWidth - rubberstampWidth;
-                y = (srcHeight / 2) - (rubberstampHeight / 2);
-                break;
-
-            case BOTTOMLEFT:
-                x = 0;
-                y = srcHeight;
-                break;
-            case BOTTOMCENTER:
-                x = (srcWidth / 2) - (rubberstampWidth / 2);
-                y = srcHeight ;
-                break;
-            case BOTTOMRIGHT:
-                x = srcWidth - rubberstampWidth;
-                y = srcHeight;
-                break;
-
-            case DIAGONAL:
-                x=0;
-                y=srcHeight;
-                break;
-
-            default:
-                break;
-        }
-
     }
 
 }
