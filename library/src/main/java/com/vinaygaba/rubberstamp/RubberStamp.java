@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-
 package com.vinaygaba.rubberstamp;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
@@ -39,10 +35,6 @@ import java.lang.annotation.RetentionPolicy;
 public class RubberStamp {
 
     static Context mContext;
-    private int mSrcWidth;
-    private int mSrcHeight;
-    private int mRubberstampWidth;
-    private int mRubberstampHeight;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({TOPLEFT, TOPCENTER, TOPRIGHT, MIDDLELEFT, CENTER, MIDDLERIGHT, BOTTOMLEFT,
@@ -73,20 +65,21 @@ public class RubberStamp {
             if (baseBitmap == null) return null;
         }
 
-        mSrcWidth = baseBitmap.getWidth();
-        mSrcHeight = baseBitmap.getHeight();
+        int baseBitmapWidth = baseBitmap.getWidth();
+        int baseBitmapHeight = baseBitmap.getHeight();
 
         Rect bounds = new Rect();
-        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT,
-                config.getColor(), Shader.TileMode.CLAMP);
+//        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT,
+//                config.getColor(), Shader.TileMode.CLAMP);
 
-        Bitmap result = Bitmap.createBitmap(mSrcWidth, mSrcHeight, baseBitmap.getConfig());
+        Bitmap result = Bitmap.createBitmap(baseBitmapWidth, baseBitmapHeight, baseBitmap.getConfig());
 
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(baseBitmap, 0, 0, null);
 
         Paint paint = new Paint();
         paint.setTextSize(config.getSize());
+        paint.setColor(config.getColor());
 
         String typeFacePath = config.getTypeFacePath();
         if(!TextUtils.isEmpty(typeFacePath)) {
@@ -94,19 +87,24 @@ public class RubberStamp {
             paint.setTypeface(typeface);
         }
 
+        int alpha = config.getAplha();
+        if (alpha >= 0 && alpha <= 255) {
+            paint.setAlpha(alpha);
+        }
+
         String rubberStampString = config.getRubberStampString();
         paint.getTextBounds(rubberStampString,0,rubberStampString.length(),bounds);
-        mRubberstampHeight = bounds.height();
-        mRubberstampWidth = bounds.width();
+        int rubberStampWidth = bounds.width();
+        int rubberStampHeight = bounds.height();
 
         paint.setAntiAlias(true);
-        paint.setShader(shader);
+//        paint.setShader(shader);
         paint.setUnderlineText(false);
 
         Pair<Integer, Integer> pair = PositionCalculator
                 .getCoordinates(config.getRubberStampPosition(),
-                        mSrcWidth, mSrcHeight,
-                        mRubberstampWidth, mRubberstampHeight);
+                        baseBitmapWidth, baseBitmapHeight,
+                        rubberStampWidth, rubberStampHeight);
 
         canvas.drawText(rubberStampString, pair.first , pair.second, paint);
 
@@ -118,26 +116,22 @@ public class RubberStamp {
 
         Bitmap srcBitmap = BitmapFactory.decodeResource(mContext.getResources(),
                 src);
-
         Bitmap tempWatermarkBitmap = BitmapFactory.decodeResource(mContext.getResources(),
                 rubberstamp);
+        Bitmap watermarkBitmap = getResizedBitmap(tempWatermarkBitmap, wMarkHeight, wMarkWidth);
 
-        Bitmap watermarkBitmap = getResizedBitmap(tempWatermarkBitmap,wMarkHeight,wMarkWidth);
+        int baseBitmapWidth = srcBitmap.getWidth();
+        int baseBitmapHeight = srcBitmap.getHeight();
 
-        mSrcWidth = srcBitmap.getWidth();
-        mSrcHeight = srcBitmap.getHeight();
+        int rubberStampWidth = watermarkBitmap.getWidth();
+        int rubberStampHeight = watermarkBitmap.getHeight();
 
-        mRubberstampHeight = watermarkBitmap.getHeight();
-        mRubberstampWidth = watermarkBitmap.getWidth();
-
-
-        Bitmap result = Bitmap.createBitmap(mSrcWidth, mSrcHeight, srcBitmap.getConfig());
-
+        Bitmap result = Bitmap.createBitmap(baseBitmapWidth, baseBitmapHeight, srcBitmap.getConfig());
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(srcBitmap, 0, 0, null);
         Pair<Integer, Integer> pair = PositionCalculator.getCoordinates(pos,
-                mSrcWidth, mSrcHeight, mRubberstampWidth, mRubberstampHeight);
-        canvas.drawBitmap(watermarkBitmap,pair.first,pair.second - mRubberstampHeight,
+                baseBitmapWidth, baseBitmapWidth, rubberStampWidth, rubberStampHeight);
+        canvas.drawBitmap(watermarkBitmap,pair.first,pair.second - rubberStampHeight,
                 null);
 
         return result;
@@ -158,5 +152,4 @@ public class RubberStamp {
 
         return resizedBitmap;
     }
-
 }

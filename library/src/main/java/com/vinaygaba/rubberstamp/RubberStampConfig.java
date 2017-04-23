@@ -18,25 +18,29 @@ public class RubberStampConfig {
     private @RubberStamp.RubberStampPosition
     int mRubberStampPosition;
     private String mRubberStampString;
+    private int mAplha;
 
     private RubberStampConfig(Bitmap baseBitmap, int size, int color, String typeFacePath,
-                             int rubberStampPosition, String rubberStampString) {
+                              int rubberStampPosition, String rubberStampString, int alpha) {
         this.mBaseBitmap = baseBitmap;
         this.mSize = size;
         this.mColor = color;
         this.mTypeFacePath = typeFacePath;
         this.mRubberStampPosition = rubberStampPosition;
         this.mRubberStampString = rubberStampString;
+        this.mAplha = alpha;
     }
 
-    private RubberStampConfig(@DrawableRes int baseDrawable, int size, int mColor, String typeFacePath,
-                              int rubberStampPosition, String rubberStampString) {
+    private RubberStampConfig(@DrawableRes int baseDrawable, int size, int mColor,
+                              String typeFacePath, int rubberStampPosition, String rubberStampString,
+                              int alpha) {
         this.mBaseDrawable = baseDrawable;
         this.mSize = size;
         this.mColor = mColor;
         this.mTypeFacePath = typeFacePath;
         this.mRubberStampPosition = rubberStampPosition;
         this.mRubberStampString = rubberStampString;
+        this.mAplha = alpha;
     }
 
     public Bitmap getBaseBitmap() {
@@ -67,6 +71,10 @@ public class RubberStampConfig {
         return mBaseDrawable;
     }
 
+    public int getAplha() {
+        return mAplha;
+    }
+
     public static class RubberStampConfigBuilder {
 
         private Bitmap mBaseBitmap;
@@ -77,6 +85,7 @@ public class RubberStampConfig {
         private @RubberStamp.RubberStampPosition
         int mRubberStampPosition = CENTER;
         private String mRubberStampString;
+        private int mAlpha = 255;
 
         public RubberStampConfigBuilder bitmap(final Bitmap bitmap) {
             this.mBaseBitmap = bitmap;
@@ -114,12 +123,17 @@ public class RubberStampConfig {
             return this;
         }
 
+        public RubberStampConfigBuilder alpha(final int alpha) {
+            this.mAlpha = alpha;
+            return this;
+        }
+
         public RubberStampConfig build() {
             return mBaseBitmap != null ?
                     new RubberStampConfig(mBaseBitmap, mSize, mColor, mTypeFacePath,
-                    mRubberStampPosition, mRubberStampString) :
+                            mRubberStampPosition, mRubberStampString, mAlpha) :
                     new RubberStampConfig(mBaseDrawable, mSize, mColor, mTypeFacePath,
-                            mRubberStampPosition, mRubberStampString);
+                            mRubberStampPosition, mRubberStampString, mAlpha);
         }
     }
 }
