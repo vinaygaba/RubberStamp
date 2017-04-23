@@ -28,7 +28,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
-import android.util.Log;
+import android.util.Pair;
 
 public class RubberStamp {
 
@@ -40,11 +40,13 @@ public class RubberStamp {
     private int rubberstampWidth;
     private int rubberstampHeight;
 
+
     public RubberStamp(Context context){
         mContext = context;
     }
 
-    public Bitmap addStamp(Bitmap src, String rubberstamp,int size,int color,String typeFacePath,Position pos) {
+    public Bitmap addStamp(Bitmap src, String rubberstamp, int size, int color, String typeFacePath,
+                           @PositionCalculator.Location int pos) {
         srcWidth = src.getWidth();
         srcHeight = src.getHeight();
 
@@ -71,14 +73,16 @@ public class RubberStamp {
         paint.setShader(shader);
         paint.setUnderlineText(false);
 
-        getRubberStampCoordinates(pos, srcWidth, srcHeight);
+        Pair<Integer, Integer> pair = PositionCalculator.getCoordinates(pos,
+                srcWidth, srcHeight, rubberstampWidth, rubberstampHeight);
 
-        canvas.drawText(rubberstamp,x , y, paint);
+        canvas.drawText(rubberstamp,pair.first , pair.second, paint);
 
         return result;
     }
 
-    public Bitmap addStamp(int src, String watermark,int size,int color,String typeFacePath,Position pos) {
+    public Bitmap addStamp(int src, String watermark, int size, int color, String typeFacePath,
+                           @PositionCalculator.Location int pos) {
 
         Bitmap srcBitmap = BitmapFactory.decodeResource(mContext.getResources(),
                 src);
@@ -88,7 +92,8 @@ public class RubberStamp {
 
 
         Rect bounds = new Rect();
-        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT, color, Shader.TileMode.CLAMP);
+        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT, color,
+                Shader.TileMode.CLAMP);
 
         Bitmap result = Bitmap.createBitmap(srcWidth, srcHeight, srcBitmap.getConfig());
 
@@ -112,14 +117,16 @@ public class RubberStamp {
         paint.setShader(shader);
         paint.setUnderlineText(false);
 
-        getRubberStampCoordinates(pos, srcWidth, srcHeight);
+        Pair<Integer, Integer> pair = PositionCalculator.getCoordinates(pos,
+                srcWidth, srcHeight, rubberstampWidth, rubberstampHeight);
 
-        canvas.drawText(watermark, x, y, paint);
+        canvas.drawText(watermark, pair.first, pair.second, paint);
 
         return result;
     }
 
-    public Bitmap addStamp(int src, int rubberstamp,int wMarkWidth,int wMarkHeight,Position pos) {
+    public Bitmap addStamp(int src, int rubberstamp, int wMarkWidth, int wMarkHeight,
+                           @PositionCalculator.Location int pos) {
 
         Bitmap srcBitmap = BitmapFactory.decodeResource(mContext.getResources(),
                 src);
@@ -132,16 +139,17 @@ public class RubberStamp {
         srcWidth = srcBitmap.getWidth();
         srcHeight = srcBitmap.getHeight();
 
-        rubberstampHeight=watermarkBitmap.getHeight();
-        rubberstampWidth=watermarkBitmap.getWidth();
+        rubberstampHeight = watermarkBitmap.getHeight();
+        rubberstampWidth = watermarkBitmap.getWidth();
 
 
         Bitmap result = Bitmap.createBitmap(srcWidth, srcHeight, srcBitmap.getConfig());
 
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(srcBitmap, 0, 0, null);
-        getRubberStampCoordinates(pos, srcWidth, srcHeight);
-        canvas.drawBitmap(watermarkBitmap,x,y-rubberstampHeight,null);
+        Pair<Integer, Integer> pair = PositionCalculator.getCoordinates(pos,
+                srcWidth, srcHeight, rubberstampWidth, rubberstampHeight);
+        canvas.drawBitmap(watermarkBitmap,pair.first,pair.second-rubberstampHeight,null);
 
         return result;
     }
@@ -159,61 +167,6 @@ public class RubberStamp {
         Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
 
         return resizedBitmap;
-
-    }
-
-    public void getRubberStampCoordinates(Position pos,int w,int h){
-
-        switch(pos){
-
-            case TOPLEFT:
-                x = 0;
-                y = rubberstampHeight;
-                break;
-            case TOPCENTER:
-                x = (srcWidth / 2) - (rubberstampWidth / 2);
-                y = rubberstampHeight;
-                break;
-            case TOPRIGHT:
-                x = srcWidth - rubberstampWidth;
-                y = rubberstampHeight;
-                break;
-
-            case MIDDLELEFT:
-                x = 0;
-                y = (srcHeight / 2) - (rubberstampHeight / 2);
-                break;
-            case MIDDLECENTER:
-                x = (srcWidth / 2) - (rubberstampWidth / 2);
-                y = (srcHeight / 2) - (rubberstampHeight / 2);
-                break;
-            case MIDDLERIGHT:
-                x = srcWidth - rubberstampWidth;
-                y = (srcHeight / 2) - (rubberstampHeight / 2);
-                break;
-
-            case BOTTOMLEFT:
-                x = 0;
-                y = srcHeight;
-                break;
-            case BOTTOMCENTER:
-                x = (srcWidth / 2) - (rubberstampWidth / 2);
-                y = srcHeight ;
-                break;
-            case BOTTOMRIGHT:
-                x = srcWidth - rubberstampWidth;
-                y = srcHeight;
-                break;
-
-            case DIAGONAL:
-                x=0;
-                y=srcHeight;
-                break;
-
-            default:
-                break;
-        }
-
     }
 
 }
