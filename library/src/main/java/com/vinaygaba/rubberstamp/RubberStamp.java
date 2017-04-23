@@ -94,6 +94,11 @@ public class RubberStamp {
             paint.setTypeface(typeface);
         }
 
+        int alpha = config.getAplha();
+        if (alpha >= 0 && alpha <= 255) {
+            paint.setAlpha(alpha);
+        }
+
         String rubberStampString = config.getRubberStampString();
         paint.getTextBounds(rubberStampString,0,rubberStampString.length(),bounds);
         mRubberstampHeight = bounds.height();
