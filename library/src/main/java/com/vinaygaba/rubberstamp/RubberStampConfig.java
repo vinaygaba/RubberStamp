@@ -31,8 +31,9 @@ public class RubberStampConfig {
         this.mAplha = alpha;
     }
 
-    private RubberStampConfig(@DrawableRes int baseDrawable, int size, int mColor, String typeFacePath,
-                              int rubberStampPosition, String rubberStampString, int alpha) {
+    private RubberStampConfig(@DrawableRes int baseDrawable, int size, int mColor,
+                              String typeFacePath, int rubberStampPosition, String rubberStampString,
+                              int alpha) {
         this.mBaseDrawable = baseDrawable;
         this.mSize = size;
         this.mColor = mColor;

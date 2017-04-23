@@ -16,6 +16,7 @@ import com.vinaygaba.rubberstamp.RubberStampConfig.RubberStampConfigBuilder;
 public class MainActivity extends AppCompatActivity {
 
     ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                .rubberStampString("Test")
                .bitmap(icon)
                .size(50)
-               .color(Color.parseColor("#FFFFFF"))
+               .color(Color.RED)
                .rubberStampPosition(RubberStamp.BOTTOMRIGHT)
                .build();
 
