@@ -69,9 +69,6 @@ public class RubberStamp {
         int baseBitmapHeight = baseBitmap.getHeight();
 
         Rect bounds = new Rect();
-//        Shader shader = new LinearGradient(0, 0, 100, 0, Color.TRANSPARENT,
-//                config.getColor(), Shader.TileMode.CLAMP);
-
         Bitmap result = Bitmap.createBitmap(baseBitmapWidth, baseBitmapHeight, baseBitmap.getConfig());
 
         Canvas canvas = new Canvas(result);
@@ -80,6 +77,8 @@ public class RubberStamp {
         Paint paint = new Paint();
         paint.setTextSize(config.getSize());
         paint.setColor(config.getColor());
+        paint.setAntiAlias(true);
+        paint.setUnderlineText(false);
 
         String typeFacePath = config.getTypeFacePath();
         if(!TextUtils.isEmpty(typeFacePath)) {
@@ -92,14 +91,13 @@ public class RubberStamp {
             paint.setAlpha(alpha);
         }
 
+        Shader shader = config.getShader();
+        if (shader != null) paint.setShader(shader);
+
         String rubberStampString = config.getRubberStampString();
         paint.getTextBounds(rubberStampString,0,rubberStampString.length(),bounds);
         int rubberStampWidth = bounds.width();
         int rubberStampHeight = bounds.height();
-
-        paint.setAntiAlias(true);
-//        paint.setShader(shader);
-        paint.setUnderlineText(false);
 
         Pair<Integer, Integer> pair = PositionCalculator
                 .getCoordinates(config.getRubberStampPosition(),

@@ -2,6 +2,7 @@ package com.vinaygaba.rubberstamp;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Shader;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 
@@ -19,9 +20,11 @@ public class RubberStampConfig {
     int mRubberStampPosition;
     private String mRubberStampString;
     private int mAplha;
+    private Shader mShader;
 
     private RubberStampConfig(Bitmap baseBitmap, int size, int color, String typeFacePath,
-                              int rubberStampPosition, String rubberStampString, int alpha) {
+                              int rubberStampPosition, String rubberStampString, int alpha,
+                              Shader shader) {
         this.mBaseBitmap = baseBitmap;
         this.mSize = size;
         this.mColor = color;
@@ -29,11 +32,12 @@ public class RubberStampConfig {
         this.mRubberStampPosition = rubberStampPosition;
         this.mRubberStampString = rubberStampString;
         this.mAplha = alpha;
+        this.mShader = shader;
     }
 
     private RubberStampConfig(@DrawableRes int baseDrawable, int size, int mColor,
                               String typeFacePath, int rubberStampPosition, String rubberStampString,
-                              int alpha) {
+                              int alpha, Shader shader) {
         this.mBaseDrawable = baseDrawable;
         this.mSize = size;
         this.mColor = mColor;
@@ -41,6 +45,7 @@ public class RubberStampConfig {
         this.mRubberStampPosition = rubberStampPosition;
         this.mRubberStampString = rubberStampString;
         this.mAplha = alpha;
+        this.mShader = shader;
     }
 
     public Bitmap getBaseBitmap() {
@@ -74,6 +79,10 @@ public class RubberStampConfig {
     public int getAplha() {
         return mAplha;
     }
+  
+    public Shader getShader() {
+        return mShader;
+    }
 
     public static class RubberStampConfigBuilder {
 
@@ -86,6 +95,7 @@ public class RubberStampConfig {
         int mRubberStampPosition = CENTER;
         private String mRubberStampString;
         private int mAlpha = 255;
+        private Shader mShader;
 
         public RubberStampConfigBuilder bitmap(final Bitmap bitmap) {
             this.mBaseBitmap = bitmap;
@@ -128,12 +138,17 @@ public class RubberStampConfig {
             return this;
         }
 
+        public RubberStampConfigBuilder alpha(final Shader shader) {
+            this.mShader = shader;
+            return this;
+        }
+
         public RubberStampConfig build() {
             return mBaseBitmap != null ?
                     new RubberStampConfig(mBaseBitmap, mSize, mColor, mTypeFacePath,
-                            mRubberStampPosition, mRubberStampString, mAlpha) :
+                            mRubberStampPosition, mRubberStampString, mAlpha, mShader) :
                     new RubberStampConfig(mBaseDrawable, mSize, mColor, mTypeFacePath,
-                            mRubberStampPosition, mRubberStampString, mAlpha);
+                            mRubberStampPosition, mRubberStampString, mAlpha, mShader);
         }
     }
 }
