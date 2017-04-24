@@ -79,7 +79,7 @@ public class RubberStampConfig {
     public int getAplha() {
         return mAplha;
     }
-
+  
     public Shader getShader() {
         return mShader;
     }

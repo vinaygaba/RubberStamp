@@ -23,7 +23,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
@@ -94,7 +93,7 @@ public class RubberStamp {
 
         Shader shader = config.getShader();
         if (shader != null) paint.setShader(shader);
-        
+
         String rubberStampString = config.getRubberStampString();
         paint.getTextBounds(rubberStampString,0,rubberStampString.length(),bounds);
         int rubberStampWidth = bounds.width();
