@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.card);
        RubberStamp rubberStamp = new RubberStamp(this);
        RubberStampConfig config = new RubberStampConfigBuilder()
-               .rubberStampString("Test")
-               .bitmap(icon)
+               .base(icon)
+               .rubberStamp("Test")
                .size(50)
                .color(Color.RED)
                .rubberStampPosition(RubberStamp.BOTTOMRIGHT)
