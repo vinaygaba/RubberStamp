@@ -2,6 +2,7 @@ package com.vinaygaba.rubberstamp;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Shader;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 
@@ -18,6 +19,7 @@ public class RubberStampConfig {
     private String mRubberStampString;
     private Bitmap mRubberStampBitmap;
     private int mAplha;
+    private Shader mShader;
 
     private RubberStampConfig(RubberStampConfigBuilder builder) {
         this.mBaseBitmap = builder.mBaseBitmap;
@@ -29,8 +31,9 @@ public class RubberStampConfig {
         this.mRubberStampString = builder.mRubberStampString;
         this.mRubberStampBitmap = builder.mRubberStampBitmap;
         this.mAplha = builder.mAlpha;
+        this.mShader = builder.mShader;
     }
-
+  
     public Bitmap getBaseBitmap() {
         return mBaseBitmap;
     }
@@ -66,6 +69,10 @@ public class RubberStampConfig {
     public int getAplha() {
         return mAplha;
     }
+  
+    public Shader getShader() {
+        return mShader;
+    }
 
     public static class RubberStampConfigBuilder {
 
@@ -79,6 +86,7 @@ public class RubberStampConfig {
         private String mRubberStampString;
         private Bitmap mRubberStampBitmap;
         private int mAlpha = 255;
+        private Shader mShader;
 
         public RubberStampConfigBuilder base(final Bitmap bitmap) {
             this.mBaseBitmap = bitmap;
@@ -126,9 +134,13 @@ public class RubberStampConfig {
             return this;
         }
 
+        public RubberStampConfigBuilder alpha(final Shader shader) {
+            this.mShader = shader;
+            return this;
+        }
+
         public RubberStampConfig build() {
             return new RubberStampConfig(this);
-
         }
     }
 }

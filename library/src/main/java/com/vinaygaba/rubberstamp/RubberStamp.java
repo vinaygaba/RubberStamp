@@ -63,11 +63,11 @@ public class RubberStamp {
 
         int baseBitmapWidth = baseBitmap.getWidth();
         int baseBitmapHeight = baseBitmap.getHeight();
-
+      
         Bitmap result = Bitmap.createBitmap(baseBitmapWidth, baseBitmapHeight, baseBitmap.getConfig());
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(baseBitmap, 0, 0, null);
-
+      
         if (!TextUtils.isEmpty(config.getRubberStampString())) {
             addTextToBitmap(config, canvas, baseBitmapWidth, baseBitmapHeight);
         }
@@ -78,12 +78,12 @@ public class RubberStamp {
         }
         return result;
     }
-
+  
     @Nullable
     private Bitmap getBaseBitmap(RubberStampConfig config) {
         Bitmap baseBitmap = config.getBaseBitmap();
         @DrawableRes int drawable = config.getBaseDrawable();
-
+      
         if (baseBitmap == null) {
             baseBitmap = BitmapFactory.decodeResource(mContext.getResources(), drawable);
             if (baseBitmap == null) return null;
@@ -154,6 +154,9 @@ public class RubberStamp {
         if (alpha >= 0 && alpha <= 255) {
             paint.setAlpha(alpha);
         }
+      
+        Shader shader = config.getShader();
+        if (shader != null) paint.setShader(shader);
 
         String rubberStampString = config.getRubberStampString();
         paint.getTextBounds(rubberStampString,0,rubberStampString.length(),bounds);
@@ -179,7 +182,10 @@ public class RubberStamp {
         if (alpha >= 0 && alpha <= 255) {
             paint.setAlpha(alpha);
         }
-
+      
+        Shader shader = config.getShader();
+        if (shader != null) paint.setShader(shader);
+      
         Pair<Integer, Integer> pair =
                 PositionCalculator.getCoordinates(config.getRubberStampPosition(), baseBitmapWidth,
                 baseBitmapWidth, rubberStampBitmap.getWidth(), rubberStampBitmap.getHeight());
