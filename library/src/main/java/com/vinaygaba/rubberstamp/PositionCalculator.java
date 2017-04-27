@@ -31,14 +31,14 @@ public class PositionCalculator {
                 return new Pair<>(bitmapWidth - rubberstampWidth, rubberstampHeight);
 
             case MIDDLELEFT:
-                return new Pair<>(0, (bitmapHeight / 2) - (rubberstampHeight / 2));
+                return new Pair<>(0, (bitmapHeight / 2) + (rubberstampHeight / 2));
 
             case CENTER:
                 return new Pair<>((bitmapWidth / 2) - (rubberstampWidth / 2),
-                        (bitmapHeight / 2) - (rubberstampHeight / 2));
+                        (bitmapHeight / 2) + (rubberstampHeight / 2));
             case MIDDLERIGHT:
                 return new Pair<>(bitmapWidth - rubberstampWidth,
-                        (bitmapHeight / 2) - (rubberstampHeight / 2));
+                        (bitmapHeight / 2) + (rubberstampHeight / 2));
 
             case BOTTOMLEFT:
                 return new Pair<>(0, bitmapHeight);
