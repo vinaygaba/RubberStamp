@@ -73,7 +73,8 @@ public class RubberStamp {
         }
 
         if (config.getRubberStampBitmap() != null) {
-            addBitmapToBitmap();
+            addBitmapToBitmap(config.getRubberStampBitmap(), config, canvas,
+                    baseBitmapWidth, baseBitmapHeight);
         }
         return result;
     }
@@ -168,7 +169,21 @@ public class RubberStamp {
         canvas.drawText(rubberStampString, pair.first , pair.second, paint);
     }
 
-    private void addBitmapToBitmap() {
+    private void addBitmapToBitmap(Bitmap rubberStampBitmap, RubberStampConfig config, Canvas canvas,
+                                   int baseBitmapWidth, int baseBitmapHeight) {
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setUnderlineText(false);
 
+        int alpha = config.getAplha();
+        if (alpha >= 0 && alpha <= 255) {
+            paint.setAlpha(alpha);
+        }
+
+        Pair<Integer, Integer> pair =
+                PositionCalculator.getCoordinates(config.getRubberStampPosition(), baseBitmapWidth,
+                baseBitmapWidth, rubberStampBitmap.getWidth(), rubberStampBitmap.getHeight());
+        canvas.drawBitmap(rubberStampBitmap,pair.first,
+                pair.second - rubberStampBitmap.getHeight(), paint);
     }
 }
