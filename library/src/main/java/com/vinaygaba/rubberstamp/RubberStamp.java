@@ -39,16 +39,16 @@ public class RubberStamp {
     static Context mContext;
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({TOPLEFT, TOPCENTER, TOPRIGHT, MIDDLELEFT, CENTER, MIDDLERIGHT, BOTTOMLEFT,
+    @IntDef({TOPLEFT, TOPCENTER, TOPRIGHT, CENTERLEFT, CENTER, CENTERRIGHT, BOTTOMLEFT,
             BOTTOMCENTER, BOTTOMRIGHT, DIAGONAL})
     public @interface RubberStampPosition {}
 
     public static final int TOPLEFT = 0;
     public static final int TOPCENTER = 1;
     public static final int TOPRIGHT = 2;
-    public static final int MIDDLELEFT = 3;
+    public static final int CENTERLEFT = 3;
     public static final int CENTER = 4;
-    public static final int MIDDLERIGHT = 5;
+    public static final int CENTERRIGHT = 5;
     public static final int BOTTOMLEFT = 6;
     public static final int BOTTOMCENTER = 7;
     public static final int BOTTOMRIGHT = 8;
@@ -60,7 +60,9 @@ public class RubberStamp {
 
     public Bitmap addStamp(RubberStampConfig config) {
         Bitmap baseBitmap = getBaseBitmap(config);
-        if (baseBitmap == null) return null;
+        if (baseBitmap == null) {
+            return baseBitmap;
+        }
 
         int baseBitmapWidth = baseBitmap.getWidth();
         int baseBitmapHeight = baseBitmap.getHeight();
@@ -193,11 +195,14 @@ public class RubberStamp {
         }
       
         Shader shader = config.getShader();
-        if (shader != null) paint.setShader(shader);
+        if (shader != null) {
+            paint.setShader(shader);
+        }
       
         Pair<Integer, Integer> pair =
                 PositionCalculator.getCoordinates(config.getRubberStampPosition(), baseBitmapWidth,
-                baseBitmapWidth, rubberStampBitmap.getWidth(), rubberStampBitmap.getHeight());
+                baseBitmapHeight, rubberStampBitmap.getWidth(), rubberStampBitmap.getHeight());
+
         canvas.drawBitmap(rubberStampBitmap,pair.first,
                 pair.second - rubberStampBitmap.getHeight(), paint);
     }
