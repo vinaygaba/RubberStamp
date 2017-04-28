@@ -5,7 +5,6 @@ import android.util.Pair;
 import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMCENTER;
 import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMLEFT;
 import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMRIGHT;
-import static com.vinaygaba.rubberstamp.RubberStamp.DIAGONAL;
 import static com.vinaygaba.rubberstamp.RubberStamp.CENTER;
 import static com.vinaygaba.rubberstamp.RubberStamp.MIDDLELEFT;
 import static com.vinaygaba.rubberstamp.RubberStamp.MIDDLERIGHT;
@@ -48,9 +47,6 @@ public class PositionCalculator {
                         bitmapHeight);
             case BOTTOMRIGHT:
                 return new Pair<>(bitmapWidth - rubberstampWidth, bitmapHeight);
-
-            case DIAGONAL:
-                return new Pair<>(0, bitmapHeight);
 
             default:
                 return new Pair<>(0,0);

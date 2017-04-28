@@ -23,14 +23,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         imageView = (ImageView)findViewById(R.id.imageView);
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.card);
+                R.drawable.rectangle);
        RubberStamp rubberStamp = new RubberStamp(this);
        RubberStampConfig config = new RubberStampConfigBuilder()
                .base(icon)
                .rubberStamp("Test")
                .size(50)
-               .color(Color.RED)
-               .rubberStampPosition(RubberStamp.BOTTOMRIGHT)
+               .rotation(-45)
+               .color(Color.WHITE)
+               .rubberStampPosition(RubberStamp.BOTTOMLEFT)
                .build();
 
         imageView.setImageBitmap(rubberStamp.addStamp(config));

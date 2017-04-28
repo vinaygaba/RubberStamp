@@ -20,6 +20,7 @@ public class RubberStampConfig {
     private Bitmap mRubberStampBitmap;
     private int mAplha;
     private Shader mShader;
+    private float mRotation;
 
     private RubberStampConfig(RubberStampConfigBuilder builder) {
         this.mBaseBitmap = builder.mBaseBitmap;
@@ -32,6 +33,7 @@ public class RubberStampConfig {
         this.mRubberStampBitmap = builder.mRubberStampBitmap;
         this.mAplha = builder.mAlpha;
         this.mShader = builder.mShader;
+        this.mRotation = builder.mRotation;
     }
   
     public Bitmap getBaseBitmap() {
@@ -74,6 +76,10 @@ public class RubberStampConfig {
         return mShader;
     }
 
+    public float getRotation() {
+        return mRotation;
+    }
+
     public static class RubberStampConfigBuilder {
 
         private Bitmap mBaseBitmap;
@@ -87,6 +93,7 @@ public class RubberStampConfig {
         private Bitmap mRubberStampBitmap;
         private int mAlpha = 255;
         private Shader mShader;
+        private float mRotation;
 
         public RubberStampConfigBuilder base(final Bitmap bitmap) {
             this.mBaseBitmap = bitmap;
@@ -134,8 +141,13 @@ public class RubberStampConfig {
             return this;
         }
 
-        public RubberStampConfigBuilder alpha(final Shader shader) {
+        public RubberStampConfigBuilder shader(final Shader shader) {
             this.mShader = shader;
+            return this;
+        }
+
+        public RubberStampConfigBuilder rotation(final float rotation) {
+            this.mRotation = rotation;
             return this;
         }
 
