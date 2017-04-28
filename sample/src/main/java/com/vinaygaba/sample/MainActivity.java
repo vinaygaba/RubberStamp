@@ -2,7 +2,6 @@ package com.vinaygaba.sample;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -24,14 +23,13 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.imageView);
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.rectangle);
+        Bitmap logo = BitmapFactory.decodeResource(getResources(),
+                R.drawable.logo);
        RubberStamp rubberStamp = new RubberStamp(this);
        RubberStampConfig config = new RubberStampConfigBuilder()
                .base(icon)
-               .rubberStamp("Test")
-               .size(50)
-               .rotation(-45)
-               .color(Color.WHITE)
-               .rubberStampPosition(RubberStamp.BOTTOMLEFT)
+               .rubberStamp(logo)
+               .rubberStampPosition(RubberStamp.BOTTOMRIGHT)
                .build();
 
         imageView.setImageBitmap(rubberStamp.addStamp(config));

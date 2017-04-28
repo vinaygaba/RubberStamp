@@ -6,8 +6,8 @@ import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMCENTER;
 import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMLEFT;
 import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMRIGHT;
 import static com.vinaygaba.rubberstamp.RubberStamp.CENTER;
-import static com.vinaygaba.rubberstamp.RubberStamp.MIDDLELEFT;
-import static com.vinaygaba.rubberstamp.RubberStamp.MIDDLERIGHT;
+import static com.vinaygaba.rubberstamp.RubberStamp.CENTERLEFT;
+import static com.vinaygaba.rubberstamp.RubberStamp.CENTERRIGHT;
 import static com.vinaygaba.rubberstamp.RubberStamp.TOPCENTER;
 import static com.vinaygaba.rubberstamp.RubberStamp.TOPLEFT;
 import static com.vinaygaba.rubberstamp.RubberStamp.TOPRIGHT;
@@ -29,13 +29,13 @@ public class PositionCalculator {
             case TOPRIGHT:
                 return new Pair<>(bitmapWidth - rubberstampWidth, rubberstampHeight);
 
-            case MIDDLELEFT:
+            case CENTERLEFT:
                 return new Pair<>(0, (bitmapHeight / 2) + (rubberstampHeight / 2));
 
             case CENTER:
                 return new Pair<>((bitmapWidth / 2) - (rubberstampWidth / 2),
                         (bitmapHeight / 2) + (rubberstampHeight / 2));
-            case MIDDLERIGHT:
+            case CENTERRIGHT:
                 return new Pair<>(bitmapWidth - rubberstampWidth,
                         (bitmapHeight / 2) + (rubberstampHeight / 2));
 
