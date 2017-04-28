@@ -155,9 +155,11 @@ public class RubberStamp {
         if (alpha >= 0 && alpha <= 255) {
             paint.setAlpha(alpha);
         }
-      
+
         Shader shader = config.getShader();
-        if (shader != null) paint.setShader(shader);
+        if (shader != null) {
+            paint.setShader(shader);
+        }
 
         String rubberStampString = config.getRubberStampString();
         paint.getTextBounds(rubberStampString,0,rubberStampString.length(),bounds);
@@ -169,6 +171,12 @@ public class RubberStamp {
                 .getCoordinates(config.getRubberStampPosition(),
                         baseBitmapWidth, baseBitmapHeight,
                         rubberStampWidth, rubberStampHeight);
+
+        float rotation = config.getRotation();
+        if (rotation != 0.0f) {
+            canvas.rotate(rotation, pair.first + bounds.exactCenterX(),
+                    pair.second - bounds.exactCenterY());
+        }
 
         canvas.drawText(rubberStampString, pair.first , pair.second, paint);
     }
