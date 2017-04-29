@@ -29,6 +29,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 
 import java.lang.annotation.Retention;
@@ -40,7 +41,7 @@ public class RubberStamp {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({TOPLEFT, TOPCENTER, TOPRIGHT, CENTERLEFT, CENTER, CENTERRIGHT, BOTTOMLEFT,
-            BOTTOMCENTER, BOTTOMRIGHT, DIAGONAL})
+            BOTTOMCENTER, BOTTOMRIGHT, CUSTOM})
     public @interface RubberStampPosition {}
 
     public static final int TOPLEFT = 0;
@@ -52,7 +53,7 @@ public class RubberStamp {
     public static final int BOTTOMLEFT = 6;
     public static final int BOTTOMCENTER = 7;
     public static final int BOTTOMRIGHT = 8;
-    public static final int DIAGONAL = 9;
+    public static final int CUSTOM = 9;
     
     public RubberStamp(Context context){
         mContext = context;
@@ -169,18 +170,26 @@ public class RubberStamp {
         int rubberStampWidth = bounds.width();
         int rubberStampHeight = bounds.height();
 
-        Pair<Integer, Integer> pair = PositionCalculator
-                .getCoordinates(config.getRubberStampPosition(),
-                        baseBitmapWidth, baseBitmapHeight,
-                        rubberStampWidth, rubberStampHeight);
+        int positionX = config.getPositionX();
+        int positionY = config.getPositionY();
+
+        if (config.getRubberStampPosition() != CUSTOM) {
+            Pair<Integer, Integer> pair = PositionCalculator
+                    .getCoordinates(config.getRubberStampPosition(),
+                            baseBitmapWidth, baseBitmapHeight,
+                            rubberStampWidth, rubberStampHeight);
+            positionX = pair.first;
+            positionY = pair.second;
+        }
+
 
         float rotation = config.getRotation();
         if (rotation != 0.0f) {
-            canvas.rotate(rotation, pair.first + bounds.exactCenterX(),
-                    pair.second - bounds.exactCenterY());
+            canvas.rotate(rotation, positionX + bounds.exactCenterX(),
+                    positionY - bounds.exactCenterY());
         }
 
-        canvas.drawText(rubberStampString, pair.first , pair.second, paint);
+        canvas.drawText(rubberStampString, positionX , positionY, paint);
     }
 
     private void addBitmapToBitmap(Bitmap rubberStampBitmap, RubberStampConfig config, Canvas canvas,
@@ -198,18 +207,26 @@ public class RubberStamp {
         if (shader != null) {
             paint.setShader(shader);
         }
-      
-        Pair<Integer, Integer> pair =
-                PositionCalculator.getCoordinates(config.getRubberStampPosition(), baseBitmapWidth,
-                baseBitmapHeight, rubberStampBitmap.getWidth(), rubberStampBitmap.getHeight());
+
+        int positionX = config.getPositionX();
+        int positionY = config.getPositionY();
+
+        if (config.getRubberStampPosition() != CUSTOM) {
+            Pair<Integer, Integer> pair =
+                    PositionCalculator.getCoordinates(config.getRubberStampPosition(),
+                            baseBitmapWidth, baseBitmapHeight,
+                            rubberStampBitmap.getWidth(), rubberStampBitmap.getHeight());
+            positionX = pair.first;
+            positionY = pair.second - rubberStampBitmap.getHeight();
+        }
 
         float rotation = config.getRotation();
         if (rotation != 0.0f) {
-            canvas.rotate(rotation, pair.first + (rubberStampBitmap.getWidth() / 2),
-                    pair.second - (rubberStampBitmap.getHeight() / 2));
+            canvas.rotate(rotation, positionX + (rubberStampBitmap.getWidth() / 2),
+                    positionY - (rubberStampBitmap.getHeight() / 2));
         }
 
-        canvas.drawBitmap(rubberStampBitmap,pair.first,
-                pair.second - rubberStampBitmap.getHeight(), paint);
+        canvas.drawBitmap(rubberStampBitmap, positionX, positionY , paint);
+        Log.e(positionX+"", positionY + "");
     }
 }
