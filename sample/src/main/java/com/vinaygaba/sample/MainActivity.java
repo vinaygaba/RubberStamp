@@ -2,6 +2,10 @@ package com.vinaygaba.sample;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Matrix;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -26,10 +30,23 @@ public class MainActivity extends AppCompatActivity {
         Bitmap logo = BitmapFactory.decodeResource(getResources(),
                 R.drawable.logo);
        RubberStamp rubberStamp = new RubberStamp(this);
+        int[] rainbow = {Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA};
+        Shader shader = new LinearGradient(0, 0, 0, logo.getWidth(), rainbow,
+                null, Shader.TileMode.MIRROR);
+
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+        shader.setLocalMatrix(matrix);
+
        RubberStampConfig config = new RubberStampConfigBuilder()
                .base(icon)
-               .rubberStamp(logo)
-               .rubberStampPosition(RubberStamp.BOTTOMRIGHT)
+               .rubberStamp("Watermark")
+               .shader(shader)
+               .backgroundcolor(Color.WHITE)
+               .size(90)
+               .rotation(-45)
+               .alpha(40)
+               .rubberStampPosition(RubberStamp.CENTER)
                .build();
 
         imageView.setImageBitmap(rubberStamp.addStamp(config));

@@ -13,7 +13,8 @@ public class RubberStampConfig {
     private Bitmap mBaseBitmap;
     @DrawableRes private int mBaseDrawable;
     private int mSize;
-    @ColorInt private int mColor;
+    @ColorInt private int mTextColor;
+    @ColorInt private int mBackgroundColor;
     private String mTypeFacePath;
     private @RubberStamp.RubberStampPosition int mRubberStampPosition;
     private String mRubberStampString;
@@ -21,12 +22,14 @@ public class RubberStampConfig {
     private int mAplha;
     private Shader mShader;
     private float mRotation;
+    private int mPositionX, mPositionY;
 
     private RubberStampConfig(RubberStampConfigBuilder builder) {
         this.mBaseBitmap = builder.mBaseBitmap;
         this.mBaseDrawable = builder.mBaseDrawable;
         this.mSize = builder.mSize;
-        this.mColor = builder.mColor;
+        this.mTextColor = builder.mTextColor;
+        this.mBackgroundColor = builder.mBackgroundColor;
         this.mTypeFacePath = builder.mTypeFacePath;
         this.mRubberStampPosition = builder.mRubberStampPosition;
         this.mRubberStampString = builder.mRubberStampString;
@@ -34,6 +37,8 @@ public class RubberStampConfig {
         this.mAplha = builder.mAlpha;
         this.mShader = builder.mShader;
         this.mRotation = builder.mRotation;
+        this.mPositionX = builder.mPositionX;
+        this.mPositionY = builder.mPositionY;
     }
   
     public Bitmap getBaseBitmap() {
@@ -48,8 +53,12 @@ public class RubberStampConfig {
         return mSize;
     }
 
-    public int getColor() {
-        return mColor;
+    public int getTextColor() {
+        return mTextColor;
+    }
+
+    public int getBackgroundColor() {
+        return mBackgroundColor;
     }
 
     public String getTypeFacePath() {
@@ -80,12 +89,21 @@ public class RubberStampConfig {
         return mRotation;
     }
 
+    public int getPositionX() {
+        return mPositionX;
+    }
+
+    public int getPositionY() {
+        return mPositionY;
+    }
+
     public static class RubberStampConfigBuilder {
 
         private Bitmap mBaseBitmap;
         @DrawableRes private int mBaseDrawable;
         private int mSize = 10;
-        @ColorInt private int mColor = Color.WHITE;
+        @ColorInt private int mTextColor = Color.BLACK;
+        @ColorInt private int mBackgroundColor;
         private String mTypeFacePath;
         private @RubberStamp.RubberStampPosition
         int mRubberStampPosition = CENTER;
@@ -94,6 +112,7 @@ public class RubberStampConfig {
         private int mAlpha = 255;
         private Shader mShader;
         private float mRotation;
+        private int mPositionX, mPositionY;
 
         public RubberStampConfigBuilder base(final Bitmap bitmap) {
             this.mBaseBitmap = bitmap;
@@ -110,8 +129,13 @@ public class RubberStampConfig {
             return this;
         }
 
-        public RubberStampConfigBuilder color(final int color) {
-            this.mColor = color;
+        public RubberStampConfigBuilder textcolor(final int color) {
+            this.mTextColor = color;
+            return this;
+        }
+
+        public RubberStampConfigBuilder backgroundcolor(final int color) {
+            this.mBackgroundColor = color;
             return this;
         }
 
@@ -148,6 +172,12 @@ public class RubberStampConfig {
 
         public RubberStampConfigBuilder rotation(final float rotation) {
             this.mRotation = rotation;
+            return this;
+        }
+
+        public RubberStampConfigBuilder position(final int positionX, final int positionY) {
+            this.mPositionX = positionX;
+            this.mPositionY = positionY;
             return this;
         }
 
