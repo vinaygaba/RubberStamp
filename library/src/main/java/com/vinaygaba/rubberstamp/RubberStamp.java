@@ -29,7 +29,6 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 
 import java.lang.annotation.Retention;
@@ -223,10 +222,9 @@ public class RubberStamp {
         float rotation = config.getRotation();
         if (rotation != 0.0f) {
             canvas.rotate(rotation, positionX + (rubberStampBitmap.getWidth() / 2),
-                    positionY - (rubberStampBitmap.getHeight() / 2));
+                    positionY + (rubberStampBitmap.getHeight() / 2));
         }
 
         canvas.drawBitmap(rubberStampBitmap, positionX, positionY , paint);
-        Log.e(positionX+"", positionY + "");
     }
 }
