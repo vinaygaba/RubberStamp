@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
        RubberStampConfig config = new RubberStampConfigBuilder()
                .base(icon)
                .rubberStamp(logo)
-               .rubberStampPosition(RubberStamp.BOTTOMRIGHT)
+               .rotation(45)
+               .rubberStampPosition(RubberStamp.CENTER)
                .build();
 
         imageView.setImageBitmap(rubberStamp.addStamp(config));

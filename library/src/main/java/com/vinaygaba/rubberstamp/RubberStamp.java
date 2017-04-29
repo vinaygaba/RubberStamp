@@ -203,6 +203,12 @@ public class RubberStamp {
                 PositionCalculator.getCoordinates(config.getRubberStampPosition(), baseBitmapWidth,
                 baseBitmapHeight, rubberStampBitmap.getWidth(), rubberStampBitmap.getHeight());
 
+        float rotation = config.getRotation();
+        if (rotation != 0.0f) {
+            canvas.rotate(rotation, pair.first + (rubberStampBitmap.getWidth() / 2),
+                    pair.second - (rubberStampBitmap.getHeight() / 2));
+        }
+
         canvas.drawBitmap(rubberStampBitmap,pair.first,
                 pair.second - rubberStampBitmap.getHeight(), paint);
     }
