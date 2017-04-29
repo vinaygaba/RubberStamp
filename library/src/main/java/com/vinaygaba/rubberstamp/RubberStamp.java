@@ -52,6 +52,8 @@ public class RubberStamp {
     public static final int BOTTOMCENTER = 7;
     public static final int BOTTOMRIGHT = 8;
     public static final int CUSTOM = 9;
+
+    public static final int BACKGROUND_MARGIN = 10;
     
     public RubberStamp(Context context){
         mContext = context;
@@ -102,7 +104,7 @@ public class RubberStamp {
         paint.setUnderlineText(false);
 
         paint.setTextSize(config.getSize());
-        paint.setColor(config.getColor());
+
 
         String typeFacePath = config.getTypeFacePath();
         if(!TextUtils.isEmpty(typeFacePath)) {
@@ -145,6 +147,18 @@ public class RubberStamp {
                     positionY - bounds.exactCenterY());
         }
 
+        int backgroundColor = config.getBackgroundColor();
+        if (backgroundColor != 0) {
+            Paint backgroundPaint = new Paint();
+            backgroundPaint.setColor(backgroundColor);
+            canvas.drawRect(positionX - BACKGROUND_MARGIN,
+                    positionY - bounds.height() - BACKGROUND_MARGIN,
+                    positionX + paint.measureText(config.getRubberStampString()),
+                    positionY + BACKGROUND_MARGIN,
+                    backgroundPaint);
+        }
+
+        paint.setColor(config.getTextColor());
         canvas.drawText(rubberStampString, positionX , positionY, paint);
     }
 

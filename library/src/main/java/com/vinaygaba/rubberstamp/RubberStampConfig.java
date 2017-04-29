@@ -13,7 +13,8 @@ public class RubberStampConfig {
     private Bitmap mBaseBitmap;
     @DrawableRes private int mBaseDrawable;
     private int mSize;
-    @ColorInt private int mColor;
+    @ColorInt private int mTextColor;
+    @ColorInt private int mBackgroundColor;
     private String mTypeFacePath;
     private @RubberStamp.RubberStampPosition int mRubberStampPosition;
     private String mRubberStampString;
@@ -27,7 +28,8 @@ public class RubberStampConfig {
         this.mBaseBitmap = builder.mBaseBitmap;
         this.mBaseDrawable = builder.mBaseDrawable;
         this.mSize = builder.mSize;
-        this.mColor = builder.mColor;
+        this.mTextColor = builder.mTextColor;
+        this.mBackgroundColor = builder.mBackgroundColor;
         this.mTypeFacePath = builder.mTypeFacePath;
         this.mRubberStampPosition = builder.mRubberStampPosition;
         this.mRubberStampString = builder.mRubberStampString;
@@ -51,8 +53,12 @@ public class RubberStampConfig {
         return mSize;
     }
 
-    public int getColor() {
-        return mColor;
+    public int getTextColor() {
+        return mTextColor;
+    }
+
+    public int getBackgroundColor() {
+        return mBackgroundColor;
     }
 
     public String getTypeFacePath() {
@@ -96,7 +102,8 @@ public class RubberStampConfig {
         private Bitmap mBaseBitmap;
         @DrawableRes private int mBaseDrawable;
         private int mSize = 10;
-        @ColorInt private int mColor = Color.WHITE;
+        @ColorInt private int mTextColor = Color.BLACK;
+        @ColorInt private int mBackgroundColor;
         private String mTypeFacePath;
         private @RubberStamp.RubberStampPosition
         int mRubberStampPosition = CENTER;
@@ -122,8 +129,13 @@ public class RubberStampConfig {
             return this;
         }
 
-        public RubberStampConfigBuilder color(final int color) {
-            this.mColor = color;
+        public RubberStampConfigBuilder textcolor(final int color) {
+            this.mTextColor = color;
+            return this;
+        }
+
+        public RubberStampConfigBuilder backgroundcolor(final int color) {
+            this.mBackgroundColor = color;
             return this;
         }
 
