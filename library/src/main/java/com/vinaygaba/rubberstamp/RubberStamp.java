@@ -20,7 +20,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Shader;
@@ -92,48 +91,6 @@ public class RubberStamp {
             if (baseBitmap == null) return null;
         }
         return baseBitmap;
-    }
-
-    public Bitmap addStamp(int src, int rubberstamp, int wMarkWidth, int wMarkHeight,
-                           @RubberStampPosition int pos) {
-
-        Bitmap srcBitmap = BitmapFactory.decodeResource(mContext.getResources(),
-                src);
-        Bitmap tempWatermarkBitmap = BitmapFactory.decodeResource(mContext.getResources(),
-                rubberstamp);
-        Bitmap watermarkBitmap = getResizedBitmap(tempWatermarkBitmap, wMarkHeight, wMarkWidth);
-
-        int baseBitmapWidth = srcBitmap.getWidth();
-        int baseBitmapHeight = srcBitmap.getHeight();
-
-        int rubberStampWidth = watermarkBitmap.getWidth();
-        int rubberStampHeight = watermarkBitmap.getHeight();
-
-        Bitmap result = Bitmap.createBitmap(baseBitmapWidth, baseBitmapHeight, srcBitmap.getConfig());
-        Canvas canvas = new Canvas(result);
-        canvas.drawBitmap(srcBitmap, 0, 0, null);
-        Pair<Integer, Integer> pair = PositionCalculator.getCoordinates(pos,
-                baseBitmapWidth, baseBitmapWidth, rubberStampWidth, rubberStampHeight);
-        canvas.drawBitmap(watermarkBitmap,pair.first,pair.second - rubberStampHeight,
-                null);
-
-        return result;
-    }
-
-    private static Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-
-        Matrix matrix = new Matrix();
-        matrix.postScale(scaleWidth, scaleHeight);
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix,
-                false);
-
-        return resizedBitmap;
     }
 
     private void addTextToBitmap(RubberStampConfig config, Canvas canvas, int baseBitmapWidth,
