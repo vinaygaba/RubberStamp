@@ -161,7 +161,7 @@ public class RubberStamp {
         }
 
         paint.setColor(config.getTextColor());
-        canvas.drawText(rubberStampString, positionX , positionY, paint);
+        //canvas.drawText(rubberStampString, positionX , positionY, paint);
     }
 
     private void addBitmapToBitmap(Bitmap rubberStampBitmap, RubberStampConfig config, Canvas canvas,
