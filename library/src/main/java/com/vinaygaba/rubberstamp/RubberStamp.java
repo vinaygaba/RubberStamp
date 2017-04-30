@@ -19,6 +19,7 @@ package com.vinaygaba.rubberstamp;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -39,7 +40,7 @@ public class RubberStamp {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({TOPLEFT, TOPCENTER, TOPRIGHT, CENTERLEFT, CENTER, CENTERRIGHT, BOTTOMLEFT,
-            BOTTOMCENTER, BOTTOMRIGHT, CUSTOM})
+            BOTTOMCENTER, BOTTOMRIGHT, CUSTOM, TILE})
     public @interface RubberStampPosition {}
 
     public static final int TOPLEFT = 0;
@@ -52,6 +53,7 @@ public class RubberStamp {
     public static final int BOTTOMCENTER = 7;
     public static final int BOTTOMRIGHT = 8;
     public static final int CUSTOM = 9;
+    public static final int TILE = 10;
 
     public static final int BACKGROUND_MARGIN = 10;
     
@@ -71,7 +73,7 @@ public class RubberStamp {
         Bitmap result = Bitmap.createBitmap(baseBitmapWidth, baseBitmapHeight, baseBitmap.getConfig());
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(baseBitmap, 0, 0, null);
-      
+
         if (!TextUtils.isEmpty(config.getRubberStampString())) {
             addTextToBitmap(config, canvas, baseBitmapWidth, baseBitmapHeight);
         }
@@ -180,10 +182,10 @@ public class RubberStamp {
 
         int positionX = config.getPositionX();
         int positionY = config.getPositionY();
-
-        if (config.getRubberStampPosition() != CUSTOM) {
+        @RubberStampPosition int rubberStampPosition = config.getRubberStampPosition();
+        if (rubberStampPosition != CUSTOM) {
             Pair<Integer, Integer> pair =
-                    PositionCalculator.getCoordinates(config.getRubberStampPosition(),
+                    PositionCalculator.getCoordinates(rubberStampPosition,
                             baseBitmapWidth, baseBitmapHeight,
                             rubberStampBitmap.getWidth(), rubberStampBitmap.getHeight());
             positionX = pair.first;
@@ -196,6 +198,14 @@ public class RubberStamp {
                     positionY + (rubberStampBitmap.getHeight() / 2));
         }
 
-        canvas.drawBitmap(rubberStampBitmap, positionX, positionY , paint);
+        if (rubberStampPosition != TILE) {
+            canvas.drawBitmap(rubberStampBitmap, positionX, positionY , paint);
+        } else {
+            paint.setShader(new BitmapShader(rubberStampBitmap,
+                    Shader.TileMode.REPEAT,
+                    Shader.TileMode.REPEAT));
+            Rect bitmapShaderRect = canvas.getClipBounds();
+            canvas.drawRect(bitmapShaderRect, paint);
+        }
     }
 }
