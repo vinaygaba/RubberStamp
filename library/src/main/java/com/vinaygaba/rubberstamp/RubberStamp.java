@@ -107,7 +107,6 @@ public class RubberStamp {
 
         paint.setTextSize(config.getSize());
 
-
         String typeFacePath = config.getTypeFacePath();
         if(!TextUtils.isEmpty(typeFacePath)) {
             Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), typeFacePath);
@@ -128,6 +127,7 @@ public class RubberStamp {
         paint.getTextBounds(rubberStampString,0,rubberStampString.length(),bounds);
 
         int rubberStampWidth = bounds.width();
+        float rubberStampMeasuredWidth = paint.measureText(rubberStampString);
         int rubberStampHeight = bounds.height();
 
         int positionX = config.getPositionX();
@@ -149,19 +149,33 @@ public class RubberStamp {
                     positionY - bounds.exactCenterY());
         }
 
-        int backgroundColor = config.getBackgroundColor();
-        if (backgroundColor != 0) {
-            Paint backgroundPaint = new Paint();
-            backgroundPaint.setColor(backgroundColor);
-            canvas.drawRect(positionX - BACKGROUND_MARGIN,
-                    positionY - bounds.height() - BACKGROUND_MARGIN,
-                    positionX + paint.measureText(config.getRubberStampString()),
-                    positionY + BACKGROUND_MARGIN,
-                    backgroundPaint);
+        if (config.getRubberStampPosition() != TILE) {
+            int backgroundColor = config.getBackgroundColor();
+            if (backgroundColor != 0) {
+                Paint backgroundPaint = new Paint();
+                backgroundPaint.setColor(backgroundColor);
+                canvas.drawRect(positionX - BACKGROUND_MARGIN,
+                        positionY - bounds.height() - BACKGROUND_MARGIN,
+                        (positionX + rubberStampMeasuredWidth),
+                        positionY + BACKGROUND_MARGIN,
+                        backgroundPaint);
+            }
+            paint.setColor(config.getTextColor());
+            canvas.drawText(rubberStampString, positionX , positionY, paint);
+        } else {
+            // TODO(vinaygaba): Improve this logic. There has to be something more intuitive
+            Bitmap textImage = Bitmap.createBitmap((int)rubberStampMeasuredWidth,
+                    rubberStampHeight,
+                    Bitmap.Config.ARGB_8888);
+            Canvas textCanvas = new Canvas(textImage);
+            textCanvas.drawText(config.getRubberStampString(), 0, rubberStampHeight, paint);
+            paint.setShader(new BitmapShader(textImage,
+                    Shader.TileMode.REPEAT,
+                    Shader.TileMode.REPEAT));
+            Rect bitmapShaderRect = canvas.getClipBounds();
+            canvas.drawRect(bitmapShaderRect, paint);
         }
 
-        paint.setColor(config.getTextColor());
-        canvas.drawText(rubberStampString, positionX , positionY, paint);
     }
 
     private void addBitmapToBitmap(Bitmap rubberStampBitmap, RubberStampConfig config, Canvas canvas,
