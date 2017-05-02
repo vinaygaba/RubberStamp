@@ -175,7 +175,6 @@ public class RubberStamp {
             Rect bitmapShaderRect = canvas.getClipBounds();
             canvas.drawRect(bitmapShaderRect, paint);
         }
-
     }
 
     private void addBitmapToBitmap(Bitmap rubberStampBitmap, RubberStampConfig config, Canvas canvas,
