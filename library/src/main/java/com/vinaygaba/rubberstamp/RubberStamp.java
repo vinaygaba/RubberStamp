@@ -113,11 +113,6 @@ public class RubberStamp {
             paint.setTypeface(typeface);
         }
 
-        int alpha = config.getAplha();
-        if (alpha >= 0 && alpha <= 255) {
-            paint.setAlpha(alpha);
-        }
-
         Shader shader = config.getShader();
         if (shader != null) {
             paint.setShader(shader);
@@ -149,6 +144,12 @@ public class RubberStamp {
                     positionY - bounds.exactCenterY());
         }
 
+        paint.setColor(config.getTextColor());
+        int alpha = config.getAplha();
+        if (alpha >= 0 && alpha <= 255) {
+            paint.setAlpha(alpha);
+        }
+
         if (config.getRubberStampPosition() != TILE) {
             int backgroundColor = config.getBackgroundColor();
             if (backgroundColor != 0) {
@@ -160,7 +161,6 @@ public class RubberStamp {
                         positionY + BACKGROUND_MARGIN,
                         backgroundPaint);
             }
-            paint.setColor(config.getTextColor());
             canvas.drawText(rubberStampString, positionX , positionY, paint);
         } else {
             // TODO(vinaygaba): Improve this logic. There has to be something more intuitive

@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.rectangle);
         Bitmap logo = BitmapFactory.decodeResource(getResources(),
                 R.drawable.logo);
+        Bitmap lenna = BitmapFactory.decodeResource(getResources(),
+                R.drawable.lenna);
        RubberStamp rubberStamp = new RubberStamp(this);
         int[] rainbow = {Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA};
         Shader shader = new LinearGradient(0, 0, 0, logo.getWidth(), rainbow,
@@ -39,14 +41,13 @@ public class MainActivity extends AppCompatActivity {
         shader.setLocalMatrix(matrix);
 
        RubberStampConfig config = new RubberStampConfigBuilder()
-               .base(icon)
+               .base(lenna)
                .rubberStamp("Watermark")
-               .shader(shader)
-               .backgroundcolor(Color.WHITE)
+               .alpha(180)
+               .textcolor(Color.WHITE)
                .size(90)
                .rotation(-45)
-               .alpha(40)
-               .rubberStampPosition(RubberStamp.CENTER)
+               .rubberStampPosition(RubberStamp.TILE)
                .build();
 
         imageView.setImageBitmap(rubberStamp.addStamp(config));
