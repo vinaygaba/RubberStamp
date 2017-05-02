@@ -49,7 +49,8 @@ public class PositionCalculator {
                 return new Pair<>(bitmapWidth - rubberstampWidth, bitmapHeight);
 
             default:
-                return new Pair<>(0,0);
+                return new Pair<>((bitmapWidth / 2) - (rubberstampWidth / 2),
+                        (bitmapHeight / 2) + (rubberstampHeight / 2));
         }
     }
 }
