@@ -42,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
 
        RubberStampConfig config = new RubberStampConfigBuilder()
                .base(lenna)
-               .rubberStamp("Watermark")
+               .rubberStamp(logo)
                .alpha(100)
-               .textcolor(Color.BLACK)
-               .backgroundcolor(Color.WHITE)
-               .shadow(0.1f,  5, 5, Color.BLUE)
-               .size(90)
+               .textColor(Color.BLACK)
+               .textBackgroundColor(Color.WHITE)
+               .textShadow(0.1f,  5, 5, Color.BLUE)
+               .textSize(90)
                .rotation(-45)
                .rubberStampPosition(RubberStamp.CENTER)
                .build();
