@@ -165,7 +165,7 @@ public class RubberStamp {
                 backgroundPaint.setColor(backgroundColor);
                 canvas.drawRect(positionX - BACKGROUND_MARGIN,
                         positionY - bounds.height() - BACKGROUND_MARGIN,
-                        (positionX + rubberStampMeasuredWidth),
+                        (positionX + rubberStampMeasuredWidth + BACKGROUND_MARGIN),
                         positionY + BACKGROUND_MARGIN,
                         backgroundPaint);
             }
