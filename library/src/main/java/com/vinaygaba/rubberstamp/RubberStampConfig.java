@@ -148,17 +148,17 @@ public class RubberStampConfig {
             return this;
         }
 
-        public RubberStampConfigBuilder size(final int size) {
+        public RubberStampConfigBuilder textSize(final int size) {
             this.mSize = size;
             return this;
         }
 
-        public RubberStampConfigBuilder textcolor(final int color) {
+        public RubberStampConfigBuilder textColor(final int color) {
             this.mTextColor = color;
             return this;
         }
 
-        public RubberStampConfigBuilder backgroundcolor(final int color) {
+        public RubberStampConfigBuilder textBackgroundColor(final int color) {
             this.mBackgroundColor = color;
             return this;
         }
@@ -205,7 +205,7 @@ public class RubberStampConfig {
             return this;
         }
 
-        public RubberStampConfigBuilder shadow(final float blurRadius, final float shadowXOffset,
+        public RubberStampConfigBuilder textShadow(final float blurRadius, final float shadowXOffset,
                                         final float shadowYOffset,@ColorInt final int shadowColor) {
             this.mShadowBlurRadius = blurRadius;
             this.mShadowXOffset = shadowXOffset;
