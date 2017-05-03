@@ -118,6 +118,14 @@ public class RubberStamp {
             paint.setShader(shader);
         }
 
+        if (config.getShadowXOffset() != 0 || config.getShadowYOffset() != 0
+        || config.getShadowBlurRadius() != 0) {
+            paint.setShadowLayer(config.getShadowBlurRadius(),
+                    config.getShadowXOffset(),
+                    config.getShadowYOffset(),
+                    config.getShadowColor());
+        }
+
         String rubberStampString = config.getRubberStampString();
         paint.getTextBounds(rubberStampString,0,rubberStampString.length(),bounds);
 
