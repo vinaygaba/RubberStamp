@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Shader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -16,8 +17,15 @@ import com.vinaygaba.rubberstamp.RubberStamp;
 import com.vinaygaba.rubberstamp.RubberStampConfig;
 import com.vinaygaba.rubberstamp.RubberStampConfig.RubberStampConfigBuilder;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func0;
+import rx.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity {
 
+    public static final String TAG = "Sample";
     ImageView imageView;
 
     @Override
@@ -29,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.rectangle);
         Bitmap logo = BitmapFactory.decodeResource(getResources(),
                 R.drawable.logo);
+        Bitmap lenna = BitmapFactory.decodeResource(getResources(),
+                R.drawable.lenna);
        RubberStamp rubberStamp = new RubberStamp(this);
         int[] rainbow = {Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA};
         Shader shader = new LinearGradient(0, 0, 0, logo.getWidth(), rainbow,
@@ -39,17 +49,42 @@ public class MainActivity extends AppCompatActivity {
         shader.setLocalMatrix(matrix);
 
        RubberStampConfig config = new RubberStampConfigBuilder()
-               .base(icon)
+               .base(lenna)
                .rubberStamp("Watermark")
-               .shader(shader)
-               .backgroundcolor(Color.WHITE)
-               .size(90)
+               .alpha(100)
+               .textColor(Color.BLACK)
+               .textBackgroundColor(Color.WHITE)
+               .textShadow(0.1f,  5, 5, Color.BLUE)
+               .textSize(90)
                .rotation(-45)
-               .alpha(40)
                .rubberStampPosition(RubberStamp.CENTER)
                .build();
 
-        imageView.setImageBitmap(rubberStamp.addStamp(config));
+       Observable<Bitmap> observable = getBitmap(rubberStamp, config);
+       observable.subscribeOn(Schedulers.computation())
+               .observeOn(AndroidSchedulers.mainThread())
+               .single()
+               .subscribe(new Action1<Bitmap>() {
+                   @Override
+                   public void call(Bitmap bitmap) {
+                       imageView.setImageBitmap(bitmap);
+                   }
+               }, new Action1<Throwable>() {
+                   @Override
+                   public void call(Throwable throwable) {
+                       Log.e(TAG, throwable.getMessage());
+                   }
+               });
+    }
+
+    public Observable<Bitmap> getBitmap(final RubberStamp rubberStamp,
+                                        final RubberStampConfig config) {
+        return Observable.defer(new Func0<Observable<Bitmap>>() {
+            @Override
+            public Observable<Bitmap> call() {
+                return Observable.just(rubberStamp.addStamp(config));
+            }
+        });
     }
 
     @Override

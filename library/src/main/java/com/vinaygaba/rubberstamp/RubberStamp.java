@@ -113,14 +113,17 @@ public class RubberStamp {
             paint.setTypeface(typeface);
         }
 
-        int alpha = config.getAplha();
-        if (alpha >= 0 && alpha <= 255) {
-            paint.setAlpha(alpha);
-        }
-
         Shader shader = config.getShader();
         if (shader != null) {
             paint.setShader(shader);
+        }
+
+        if (config.getShadowXOffset() != 0 || config.getShadowYOffset() != 0
+        || config.getShadowBlurRadius() != 0) {
+            paint.setShadowLayer(config.getShadowBlurRadius(),
+                    config.getShadowXOffset(),
+                    config.getShadowYOffset(),
+                    config.getShadowColor());
         }
 
         String rubberStampString = config.getRubberStampString();
@@ -148,6 +151,12 @@ public class RubberStamp {
             canvas.rotate(rotation, positionX + bounds.exactCenterX(),
                     positionY - bounds.exactCenterY());
         }
+      
+        paint.setColor(config.getTextColor());
+        int alpha = config.getAplha();
+        if (alpha >= 0 && alpha <= 255) {
+            paint.setAlpha(alpha);
+        }
 
         if (config.getRubberStampPosition() != TILE) {
             int backgroundColor = config.getBackgroundColor();
@@ -156,11 +165,10 @@ public class RubberStamp {
                 backgroundPaint.setColor(backgroundColor);
                 canvas.drawRect(positionX - BACKGROUND_MARGIN,
                         positionY - bounds.height() - BACKGROUND_MARGIN,
-                        (positionX + rubberStampMeasuredWidth),
+                        (positionX + rubberStampMeasuredWidth + BACKGROUND_MARGIN),
                         positionY + BACKGROUND_MARGIN,
                         backgroundPaint);
             }
-            paint.setColor(config.getTextColor());
             canvas.drawText(rubberStampString, positionX , positionY, paint);
         } else {
             // TODO(vinaygaba): Improve this logic. There has to be something more intuitive
@@ -174,7 +182,7 @@ public class RubberStamp {
                     Shader.TileMode.REPEAT));
             Rect bitmapShaderRect = canvas.getClipBounds();
             canvas.drawRect(bitmapShaderRect, paint);
-        }
+        }    
     }
 
     private void addBitmapToBitmap(Bitmap rubberStampBitmap, RubberStampConfig config, Canvas canvas,

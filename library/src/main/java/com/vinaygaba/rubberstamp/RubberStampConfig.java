@@ -23,6 +23,8 @@ public class RubberStampConfig {
     private Shader mShader;
     private float mRotation;
     private int mPositionX, mPositionY;
+    private float mShadowBlurRadius, mShadowXOffset, mShadowYOffset;
+    private int mShadowColor;
 
     private RubberStampConfig(RubberStampConfigBuilder builder) {
         this.mBaseBitmap = builder.mBaseBitmap;
@@ -39,6 +41,10 @@ public class RubberStampConfig {
         this.mRotation = builder.mRotation;
         this.mPositionX = builder.mPositionX;
         this.mPositionY = builder.mPositionY;
+        this.mShadowColor = builder.mShadowColor;
+        this.mShadowXOffset = builder.mShadowXOffset;
+        this.mShadowYOffset = builder.mShadowYOffset;
+        this.mShadowBlurRadius = builder.mShadowBlurRadius;
     }
   
     public Bitmap getBaseBitmap() {
@@ -97,6 +103,22 @@ public class RubberStampConfig {
         return mPositionY;
     }
 
+    public float getShadowBlurRadius() {
+        return mShadowBlurRadius;
+    }
+
+    public float getShadowXOffset() {
+        return mShadowXOffset;
+    }
+
+    public float getShadowYOffset() {
+        return mShadowYOffset;
+    }
+
+    public int getShadowColor() {
+        return mShadowColor;
+    }
+
     public static class RubberStampConfigBuilder {
 
         private Bitmap mBaseBitmap;
@@ -113,6 +135,8 @@ public class RubberStampConfig {
         private Shader mShader;
         private float mRotation;
         private int mPositionX, mPositionY;
+        private float mShadowBlurRadius, mShadowXOffset, mShadowYOffset;
+        private int mShadowColor = Color.WHITE;
 
         public RubberStampConfigBuilder base(final Bitmap bitmap) {
             this.mBaseBitmap = bitmap;
@@ -124,17 +148,17 @@ public class RubberStampConfig {
             return this;
         }
 
-        public RubberStampConfigBuilder size(final int size) {
+        public RubberStampConfigBuilder textSize(final int size) {
             this.mSize = size;
             return this;
         }
 
-        public RubberStampConfigBuilder textcolor(final int color) {
+        public RubberStampConfigBuilder textColor(final int color) {
             this.mTextColor = color;
             return this;
         }
 
-        public RubberStampConfigBuilder backgroundcolor(final int color) {
+        public RubberStampConfigBuilder textBackgroundColor(final int color) {
             this.mBackgroundColor = color;
             return this;
         }
@@ -178,6 +202,15 @@ public class RubberStampConfig {
         public RubberStampConfigBuilder position(final int positionX, final int positionY) {
             this.mPositionX = positionX;
             this.mPositionY = positionY;
+            return this;
+        }
+
+        public RubberStampConfigBuilder textShadow(final float blurRadius, final float shadowXOffset,
+                                        final float shadowYOffset,@ColorInt final int shadowColor) {
+            this.mShadowBlurRadius = blurRadius;
+            this.mShadowXOffset = shadowXOffset;
+            this.mShadowYOffset = shadowYOffset;
+            this.mShadowColor = shadowColor;
             return this;
         }
 
