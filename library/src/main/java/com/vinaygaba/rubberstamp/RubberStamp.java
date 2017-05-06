@@ -151,7 +151,7 @@ public class RubberStamp {
             canvas.rotate(rotation, positionX + bounds.exactCenterX(),
                     positionY - bounds.exactCenterY());
         }
-
+      
         paint.setColor(config.getTextColor());
         int alpha = config.getAplha();
         if (alpha >= 0 && alpha <= 255) {
@@ -182,7 +182,7 @@ public class RubberStamp {
                     Shader.TileMode.REPEAT));
             Rect bitmapShaderRect = canvas.getClipBounds();
             canvas.drawRect(bitmapShaderRect, paint);
-        }
+        }    
     }
 
     private void addBitmapToBitmap(Bitmap rubberStampBitmap, RubberStampConfig config, Canvas canvas,
