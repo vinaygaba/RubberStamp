@@ -12,39 +12,39 @@ public class RubberStampConfig {
 
     private Bitmap mBaseBitmap;
     @DrawableRes private int mBaseDrawable;
-    private int mSize;
+    private int mTextSize;
     @ColorInt private int mTextColor;
-    @ColorInt private int mBackgroundColor;
+    @ColorInt private int mTextBackgroundColor;
     private String mTypeFacePath;
     private RubberStampPosition mRubberStampPosition;
     private String mRubberStampString;
     private Bitmap mRubberStampBitmap;
     private int mAplha;
-    private Shader mShader;
+    private Shader mTextShader;
     private float mRotation;
     private int mPositionX, mPositionY;
-    private float mShadowBlurRadius, mShadowXOffset, mShadowYOffset;
-    private int mShadowColor;
+    private float mTextShadowBlurRadius, mTextShadowXOffset, mTextShadowYOffset;
+    private int mTextShadowColor;
 
     private RubberStampConfig(RubberStampConfigBuilder builder) {
         this.mBaseBitmap = builder.mBaseBitmap;
         this.mBaseDrawable = builder.mBaseDrawable;
-        this.mSize = builder.mSize;
+        this.mTextSize = builder.mTextSize;
         this.mTextColor = builder.mTextColor;
-        this.mBackgroundColor = builder.mBackgroundColor;
+        this.mTextBackgroundColor = builder.mTextBackgroundColor;
         this.mTypeFacePath = builder.mTypeFacePath;
         this.mRubberStampPosition = builder.mRubberStampPosition;
         this.mRubberStampString = builder.mRubberStampString;
         this.mRubberStampBitmap = builder.mRubberStampBitmap;
         this.mAplha = builder.mAlpha;
-        this.mShader = builder.mShader;
+        this.mTextShader = builder.mTextShader;
         this.mRotation = builder.mRotation;
         this.mPositionX = builder.mPositionX;
         this.mPositionY = builder.mPositionY;
-        this.mShadowColor = builder.mShadowColor;
-        this.mShadowXOffset = builder.mShadowXOffset;
-        this.mShadowYOffset = builder.mShadowYOffset;
-        this.mShadowBlurRadius = builder.mShadowBlurRadius;
+        this.mTextShadowColor = builder.mTextShadowColor;
+        this.mTextShadowXOffset = builder.mTextShadowXOffset;
+        this.mTextShadowYOffset = builder.mTextShadowYOffset;
+        this.mTextShadowBlurRadius = builder.mTextShadowBlurRadius;
     }
   
     public Bitmap getBaseBitmap() {
@@ -55,16 +55,16 @@ public class RubberStampConfig {
         return mBaseDrawable;
     }
 
-    public int getSize() {
-        return mSize;
+    public int getTextSize() {
+        return mTextSize;
     }
 
     public int getTextColor() {
         return mTextColor;
     }
 
-    public int getBackgroundColor() {
-        return mBackgroundColor;
+    public int getTextBackgroundColor() {
+        return mTextBackgroundColor;
     }
 
     public String getTypeFacePath() {
@@ -87,8 +87,8 @@ public class RubberStampConfig {
         return mAplha;
     }
   
-    public Shader getShader() {
-        return mShader;
+    public Shader getTextShader() {
+        return mTextShader;
     }
 
     public float getRotation() {
@@ -103,39 +103,39 @@ public class RubberStampConfig {
         return mPositionY;
     }
 
-    public float getShadowBlurRadius() {
-        return mShadowBlurRadius;
+    public float getTextShadowBlurRadius() {
+        return mTextShadowBlurRadius;
     }
 
-    public float getShadowXOffset() {
-        return mShadowXOffset;
+    public float getTextShadowXOffset() {
+        return mTextShadowXOffset;
     }
 
-    public float getShadowYOffset() {
-        return mShadowYOffset;
+    public float getTextShadowYOffset() {
+        return mTextShadowYOffset;
     }
 
-    public int getShadowColor() {
-        return mShadowColor;
+    public int getTextShadowColor() {
+        return mTextShadowColor;
     }
 
     public static class RubberStampConfigBuilder {
 
         private Bitmap mBaseBitmap;
         @DrawableRes private int mBaseDrawable;
-        private int mSize = 10;
+        private int mTextSize = 40;
         @ColorInt private int mTextColor = Color.BLACK;
-        @ColorInt private int mBackgroundColor;
+        @ColorInt private int mTextBackgroundColor;
         private String mTypeFacePath;
         private RubberStampPosition mRubberStampPosition = CENTER;
         private String mRubberStampString;
         private Bitmap mRubberStampBitmap;
         private int mAlpha = 255;
-        private Shader mShader;
+        private Shader mTextShader;
         private float mRotation;
         private int mPositionX, mPositionY;
-        private float mShadowBlurRadius, mShadowXOffset, mShadowYOffset;
-        private int mShadowColor = Color.WHITE;
+        private float mTextShadowBlurRadius, mTextShadowXOffset, mTextShadowYOffset;
+        @ColorInt private int mTextShadowColor = Color.WHITE;
 
         public RubberStampConfigBuilder base(final Bitmap bitmap) {
             this.mBaseBitmap = bitmap;
@@ -148,7 +148,7 @@ public class RubberStampConfig {
         }
 
         public RubberStampConfigBuilder textSize(final int size) {
-            this.mSize = size;
+            this.mTextSize = size;
             return this;
         }
 
@@ -158,7 +158,7 @@ public class RubberStampConfig {
         }
 
         public RubberStampConfigBuilder textBackgroundColor(final int color) {
-            this.mBackgroundColor = color;
+            this.mTextBackgroundColor = color;
             return this;
         }
 
@@ -200,8 +200,8 @@ public class RubberStampConfig {
             return this;
         }
 
-        public RubberStampConfigBuilder shader(final Shader shader) {
-            this.mShader = shader;
+        public RubberStampConfigBuilder textShader(final Shader shader) {
+            this.mTextShader = shader;
             return this;
         }
 
@@ -212,19 +212,10 @@ public class RubberStampConfig {
 
         public RubberStampConfigBuilder textShadow(final float blurRadius, final float shadowXOffset,
                                         final float shadowYOffset,@ColorInt final int shadowColor) {
-            this.mShadowBlurRadius = blurRadius;
-            this.mShadowXOffset = shadowXOffset;
-            this.mShadowYOffset = shadowYOffset;
-            this.mShadowColor = shadowColor;
-            return this;
-        }
-
-        public RubberStampConfigBuilder textShadow(final float blurRadius, final float shadowXOffset,
-                                        final float shadowYOffset,@ColorInt final int shadowColor) {
-            this.mShadowBlurRadius = blurRadius;
-            this.mShadowXOffset = shadowXOffset;
-            this.mShadowYOffset = shadowYOffset;
-            this.mShadowColor = shadowColor;
+            this.mTextShadowBlurRadius = blurRadius;
+            this.mTextShadowXOffset = shadowXOffset;
+            this.mTextShadowYOffset = shadowYOffset;
+            this.mTextShadowColor = shadowColor;
             return this;
         }
 

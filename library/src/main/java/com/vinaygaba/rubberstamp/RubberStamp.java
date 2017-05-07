@@ -87,7 +87,7 @@ public class RubberStamp {
         paint.setAntiAlias(true);
         paint.setUnderlineText(false);
 
-        paint.setTextSize(config.getSize());
+        paint.setTextSize(config.getTextSize());
 
         String typeFacePath = config.getTypeFacePath();
         if(!TextUtils.isEmpty(typeFacePath)) {
@@ -95,17 +95,17 @@ public class RubberStamp {
             paint.setTypeface(typeface);
         }
 
-        Shader shader = config.getShader();
+        Shader shader = config.getTextShader();
         if (shader != null) {
             paint.setShader(shader);
         }
 
-        if (config.getShadowXOffset() != 0 || config.getShadowYOffset() != 0
-        || config.getShadowBlurRadius() != 0) {
-            paint.setShadowLayer(config.getShadowBlurRadius(),
-                    config.getShadowXOffset(),
-                    config.getShadowYOffset(),
-                    config.getShadowColor());
+        if (config.getTextShadowXOffset() != 0 || config.getTextShadowYOffset() != 0
+        || config.getTextShadowBlurRadius() != 0) {
+            paint.setShadowLayer(config.getTextShadowBlurRadius(),
+                    config.getTextShadowXOffset(),
+                    config.getTextShadowYOffset(),
+                    config.getTextShadowColor());
         }
 
         String rubberStampString = config.getRubberStampString();
@@ -141,7 +141,7 @@ public class RubberStamp {
         }
 
         if (config.getRubberStampPosition() != TILE) {
-            int backgroundColor = config.getBackgroundColor();
+            int backgroundColor = config.getTextBackgroundColor();
             if (backgroundColor != 0) {
                 Paint backgroundPaint = new Paint();
                 backgroundPaint.setColor(backgroundColor);
@@ -176,11 +176,6 @@ public class RubberStamp {
         int alpha = config.getAplha();
         if (alpha >= 0 && alpha <= 255) {
             paint.setAlpha(alpha);
-        }
-      
-        Shader shader = config.getShader();
-        if (shader != null) {
-            paint.setShader(shader);
         }
 
         int positionX = config.getPositionX();
