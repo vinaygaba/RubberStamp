@@ -24,12 +24,6 @@ import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.schedulers.Schedulers;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func0;
-import rx.schedulers.Schedulers;
-
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "Sample";
@@ -40,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageView = (ImageView)findViewById(R.id.imageView);
-        Bitmap rectangle = BitmapFactory.decodeResource(getResources(),
-                R.drawable.rectangle);
+
         Bitmap logo = BitmapFactory.decodeResource(getResources(),
                 R.drawable.logo);
         Bitmap lenna = BitmapFactory.decodeResource(getResources(),
                 R.drawable.lenna);
-       RubberStamp rubberStamp = new RubberStamp(this);
+
+        RubberStamp rubberStamp = new RubberStamp(this);
         int[] rainbow = {Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA};
         Shader shader = new LinearGradient(0, 0, 0, logo.getWidth(), rainbow,
                 null, Shader.TileMode.MIRROR);
@@ -55,29 +49,31 @@ public class MainActivity extends AppCompatActivity {
         matrix.setRotate(90);
         shader.setLocalMatrix(matrix);
 
-       RubberStampConfig config = new RubberStampConfigBuilder()
-               .base(lenna)
-               .rubberStamp(logo)
-               .alpha(100)
-               .rotation(-45)
-               .rubberStampPosition(RubberStampPosition.TILE)
-               .build();
+        RubberStampConfig config = new RubberStampConfigBuilder()
+                .base(lenna)
+                .rubberStamp("Watermark")
+                .textColor(Color.RED)
+                .textShadow(0.1f,  5, 5, Color.MAGENTA)
+                .alpha(255)
+                .rotation(-45)
+                .rubberStampPosition(RubberStampPosition.CENTER)
+                .build();
 
-       Observable<Bitmap> observable = getBitmap(rubberStamp, config);
-       observable.subscribeOn(Schedulers.computation())
-               .observeOn(AndroidSchedulers.mainThread())
-               .single()
-               .subscribe(new Action1<Bitmap>() {
-                   @Override
-                   public void call(Bitmap bitmap) {
-                       imageView.setImageBitmap(bitmap);
-                   }
-               }, new Action1<Throwable>() {
-                   @Override
-                   public void call(Throwable throwable) {
-                       Log.e(TAG, throwable.getMessage());
-                   }
-               });
+        Observable<Bitmap> observable = getBitmap(rubberStamp, config);
+        observable.subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .single()
+                .subscribe(new Action1<Bitmap>() {
+                    @Override
+                    public void call(Bitmap bitmap) {
+                        imageView.setImageBitmap(bitmap);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(TAG, throwable.getMessage());
+                    }
+                });
     }
 
     public Observable<Bitmap> getBitmap(final RubberStamp rubberStamp,
