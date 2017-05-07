@@ -24,6 +24,12 @@ import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.schedulers.Schedulers;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func0;
+import rx.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "Sample";
