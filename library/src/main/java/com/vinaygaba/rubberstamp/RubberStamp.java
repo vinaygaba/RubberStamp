@@ -26,35 +26,17 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import static com.vinaygaba.rubberstamp.RubberStampPosition.CUSTOM;
+import static com.vinaygaba.rubberstamp.RubberStampPosition.TILE;
+
 
 public class RubberStamp {
 
     static Context mContext;
-
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({TOPLEFT, TOPCENTER, TOPRIGHT, CENTERLEFT, CENTER, CENTERRIGHT, BOTTOMLEFT,
-            BOTTOMCENTER, BOTTOMRIGHT, CUSTOM, TILE})
-    public @interface RubberStampPosition {}
-
-    public static final int TOPLEFT = 0;
-    public static final int TOPCENTER = 1;
-    public static final int TOPRIGHT = 2;
-    public static final int CENTERLEFT = 3;
-    public static final int CENTER = 4;
-    public static final int CENTERRIGHT = 5;
-    public static final int BOTTOMLEFT = 6;
-    public static final int BOTTOMCENTER = 7;
-    public static final int BOTTOMRIGHT = 8;
-    public static final int CUSTOM = 9;
-    public static final int TILE = 10;
-
     public static final int BACKGROUND_MARGIN = 10;
     
     public RubberStamp(Context context){
@@ -203,7 +185,7 @@ public class RubberStamp {
 
         int positionX = config.getPositionX();
         int positionY = config.getPositionY();
-        @RubberStampPosition int rubberStampPosition = config.getRubberStampPosition();
+        RubberStampPosition rubberStampPosition = config.getRubberStampPosition();
         if (rubberStampPosition != CUSTOM) {
             Pair<Integer, Integer> pair =
                     PositionCalculator.getCoordinates(rubberStampPosition,

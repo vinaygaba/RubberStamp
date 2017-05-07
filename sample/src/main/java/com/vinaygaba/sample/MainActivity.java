@@ -16,6 +16,13 @@ import android.widget.ImageView;
 import com.vinaygaba.rubberstamp.RubberStamp;
 import com.vinaygaba.rubberstamp.RubberStampConfig;
 import com.vinaygaba.rubberstamp.RubberStampConfig.RubberStampConfigBuilder;
+import com.vinaygaba.rubberstamp.RubberStampPosition;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func0;
+import rx.schedulers.Schedulers;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageView = (ImageView)findViewById(R.id.imageView);
-        Bitmap icon = BitmapFactory.decodeResource(getResources(),
+        Bitmap rectangle = BitmapFactory.decodeResource(getResources(),
                 R.drawable.rectangle);
         Bitmap logo = BitmapFactory.decodeResource(getResources(),
                 R.drawable.logo);
@@ -50,14 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
        RubberStampConfig config = new RubberStampConfigBuilder()
                .base(lenna)
-               .rubberStamp("Watermark")
+               .rubberStamp(logo)
                .alpha(100)
-               .textColor(Color.BLACK)
-               .textBackgroundColor(Color.WHITE)
-               .textShadow(0.1f,  5, 5, Color.BLUE)
-               .textSize(90)
                .rotation(-45)
-               .rubberStampPosition(RubberStamp.CENTER)
+               .rubberStampPosition(RubberStampPosition.TILE)
                .build();
 
        Observable<Bitmap> observable = getBitmap(rubberStamp, config);

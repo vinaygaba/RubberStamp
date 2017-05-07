@@ -2,50 +2,39 @@ package com.vinaygaba.rubberstamp;
 
 import android.util.Pair;
 
-import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMCENTER;
-import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMLEFT;
-import static com.vinaygaba.rubberstamp.RubberStamp.BOTTOMRIGHT;
-import static com.vinaygaba.rubberstamp.RubberStamp.CENTER;
-import static com.vinaygaba.rubberstamp.RubberStamp.CENTERLEFT;
-import static com.vinaygaba.rubberstamp.RubberStamp.CENTERRIGHT;
-import static com.vinaygaba.rubberstamp.RubberStamp.TOPCENTER;
-import static com.vinaygaba.rubberstamp.RubberStamp.TOPLEFT;
-import static com.vinaygaba.rubberstamp.RubberStamp.TOPRIGHT;
-
 public class PositionCalculator {
 
-
-    public static Pair<Integer, Integer> getCoordinates(@RubberStamp.RubberStampPosition int location,
+    public static Pair<Integer, Integer> getCoordinates(RubberStampPosition location,
                                                         int bitmapWidth, int bitmapHeight,
                                                         int rubberstampWidth, int rubberstampHeight) {
         switch(location){
 
-            case TOPLEFT:
+            case TOP_LEFT:
                 return new Pair<>(0, rubberstampHeight);
 
-            case TOPCENTER:
+            case TOP_CENTER:
                 return new Pair<>((bitmapWidth / 2) - (rubberstampWidth / 2),
                         rubberstampHeight);
-            case TOPRIGHT:
+            case TOP_RIGHT:
                 return new Pair<>(bitmapWidth - rubberstampWidth, rubberstampHeight);
 
-            case CENTERLEFT:
+            case CENTER_LEFT:
                 return new Pair<>(0, (bitmapHeight / 2) + (rubberstampHeight / 2));
 
             case CENTER:
                 return new Pair<>((bitmapWidth / 2) - (rubberstampWidth / 2),
                         (bitmapHeight / 2) + (rubberstampHeight / 2));
-            case CENTERRIGHT:
+            case CENTER_RIGHT:
                 return new Pair<>(bitmapWidth - rubberstampWidth,
                         (bitmapHeight / 2) + (rubberstampHeight / 2));
 
-            case BOTTOMLEFT:
+            case BOTTOM_LEFT:
                 return new Pair<>(0, bitmapHeight);
 
-            case BOTTOMCENTER:
+            case BOTTOM_CENTER:
                 return new Pair<>((bitmapWidth / 2) - (rubberstampWidth / 2),
                         bitmapHeight);
-            case BOTTOMRIGHT:
+            case BOTTOM_RIGHT:
                 return new Pair<>(bitmapWidth - rubberstampWidth, bitmapHeight);
 
             default:
