@@ -169,6 +169,20 @@ public class RubberStampConfig {
         }
 
         public RubberStampConfigBuilder rubberStampPosition(final @RubberStamp.RubberStampPosition
+                                                                    int position,
+                                                            final int positionX,
+                                                            final int positionY) {
+            if (position != RubberStamp.CUSTOM) {
+                throw new IllegalArgumentException("This constructor can only be used when the " +
+                        "rubberStampPosition is RubberStamp.CUSTOM");
+            }
+            this.mRubberStampPosition = position;
+            this.mPositionX = positionX;
+            this.mPositionY = positionY;
+            return this;
+        }
+
+        public RubberStampConfigBuilder rubberStampPosition(final @RubberStamp.RubberStampPosition
                                                                     int position) {
             this.mRubberStampPosition = position;
             return this;
@@ -196,12 +210,6 @@ public class RubberStampConfig {
 
         public RubberStampConfigBuilder rotation(final float rotation) {
             this.mRotation = rotation;
-            return this;
-        }
-
-        public RubberStampConfigBuilder position(final int positionX, final int positionY) {
-            this.mPositionX = positionX;
-            this.mPositionY = positionY;
             return this;
         }
 
