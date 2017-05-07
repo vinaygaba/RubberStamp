@@ -172,11 +172,11 @@ public class RubberStampConfig {
                                                                     int position,
                                                             final int positionX,
                                                             final int positionY) {
-            this.mRubberStampPosition = position;
-            if (mRubberStampPosition != RubberStamp.CUSTOM) {
+            if (position != RubberStamp.CUSTOM) {
                 throw new IllegalArgumentException("This constructor can only be used when the " +
                         "rubberStampPosition is RubberStamp.CUSTOM");
             }
+            this.mRubberStampPosition = position;
             this.mPositionX = positionX;
             this.mPositionY = positionY;
             return this;
