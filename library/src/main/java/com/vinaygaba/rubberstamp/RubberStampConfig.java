@@ -6,7 +6,7 @@ import android.graphics.Shader;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 
-import static com.vinaygaba.rubberstamp.RubberStamp.CENTER;
+import static com.vinaygaba.rubberstamp.RubberStampPosition.CENTER;
 
 public class RubberStampConfig {
 
@@ -16,7 +16,7 @@ public class RubberStampConfig {
     @ColorInt private int mTextColor;
     @ColorInt private int mBackgroundColor;
     private String mTypeFacePath;
-    private @RubberStamp.RubberStampPosition int mRubberStampPosition;
+    private RubberStampPosition mRubberStampPosition;
     private String mRubberStampString;
     private Bitmap mRubberStampBitmap;
     private int mAplha;
@@ -71,7 +71,7 @@ public class RubberStampConfig {
         return mTypeFacePath;
     }
 
-    public int getRubberStampPosition() {
+    public RubberStampPosition getRubberStampPosition() {
         return mRubberStampPosition;
     }
 
@@ -127,8 +127,7 @@ public class RubberStampConfig {
         @ColorInt private int mTextColor = Color.BLACK;
         @ColorInt private int mBackgroundColor;
         private String mTypeFacePath;
-        private @RubberStamp.RubberStampPosition
-        int mRubberStampPosition = CENTER;
+        private RubberStampPosition mRubberStampPosition = CENTER;
         private String mRubberStampString;
         private Bitmap mRubberStampBitmap;
         private int mAlpha = 255;
@@ -168,11 +167,10 @@ public class RubberStampConfig {
             return this;
         }
 
-        public RubberStampConfigBuilder rubberStampPosition(final @RubberStamp.RubberStampPosition
-                                                                    int position,
+        public RubberStampConfigBuilder rubberStampPosition(final RubberStampPosition position,
                                                             final int positionX,
                                                             final int positionY) {
-            if (position != RubberStamp.CUSTOM) {
+            if (position != RubberStampPosition.CUSTOM) {
                 throw new IllegalArgumentException("This constructor can only be used when the " +
                         "rubberStampPosition is RubberStamp.CUSTOM");
             }
@@ -182,8 +180,7 @@ public class RubberStampConfig {
             return this;
         }
 
-        public RubberStampConfigBuilder rubberStampPosition(final @RubberStamp.RubberStampPosition
-                                                                    int position) {
+        public RubberStampConfigBuilder rubberStampPosition(final RubberStampPosition position) {
             this.mRubberStampPosition = position;
             return this;
         }
