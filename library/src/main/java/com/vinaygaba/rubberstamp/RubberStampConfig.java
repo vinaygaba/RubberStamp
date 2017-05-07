@@ -219,15 +219,6 @@ public class RubberStampConfig {
             return this;
         }
 
-        public RubberStampConfigBuilder textShadow(final float blurRadius, final float shadowXOffset,
-                                        final float shadowYOffset,@ColorInt final int shadowColor) {
-            this.mShadowBlurRadius = blurRadius;
-            this.mShadowXOffset = shadowXOffset;
-            this.mShadowYOffset = shadowYOffset;
-            this.mShadowColor = shadowColor;
-            return this;
-        }
-
         public RubberStampConfig build() {
             return new RubberStampConfig(this);
         }
