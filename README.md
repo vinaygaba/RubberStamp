@@ -3,7 +3,7 @@ RubberStamp:mailbox:
 
 ![Feature Image](images/FeatureImage.png)
 
-RubberStamp is an Android library that makes it easy for you to add a stamp, logo or watermark to your images.
+RubberStamp is an Android library that makes it easy for you to watermark your images.
 
 Screenshots
 ------------
@@ -13,9 +13,11 @@ Screenshots
 Features
 ---------
 
-* Add text or logos (drawables) on top of your images.
-* Customize the font, color, size, position, etc.
-* Choose from 8 different pre defined positions for your logo/stamp.
+* Add a watermark to your images.
+* It can be text or another image.
+* Multiple ways and features to customize how the watermark looks including attributes like font, color, opacity, size, shadow properties, etc.
+* Flexible API that has multiple pre-defined options to get started quickly.
+* Ability to tile your watermark across an image.
 
 
 Setup
@@ -29,12 +31,59 @@ dependencies {
 
 Usage
 ------
-Using RubberStamp is extremely easy. You can use it in the following manner:
+Using RubberStamp is extremely easy.
+
+First, define the characteristics of your watermark using RubberStampConfig
 
 ```java
+RubberStampConfig config = new RubberStampConfigBuilder()
+              .base(R.drawable.lenna)
+              .rubberStamp("Watermark")
+              .alpha(100)
+              .textColor(Color.BLACK)
+              .textBackgroundColor(Color.WHITE)
+              .textShadow(0.1f,  5, 5, Color.BLUE)
+              .textSize(90)
+              .rotation(-45)
+              .rubberStampPosition(RubberStamp.CENTER)
+              .build();
+```
+
+That's all that is needed really. All you need to do next is just pass this config to the addStamp method of the RubberStamp class and voila!
+```java
 RubberStamp rubberStamp = new RubberStamp(this);
+rubberStamp.addStamp(config);
+```
+
+Attribute Usage & Documentation
+--------------------------------
+All the attributes listed below are part of RubberStampConfig.
+
+##### I. `base`
+Use this to set the base image on top of which the watermark will be drawn. This can be a bitmap or a drawable.
+
+```java
+config.base(bitmap);
+
+config.base(R.id.image);
+```
+
+##### II. `rubberStamp`
+The rubberstamp is the watermark that will be drawn on top of the base image. This can either be a bitmap or a string.
+
+```java
+config.rubberStamp("Watermark");
+
+config.rubberStamp(bitmap);
+```
+
+Due to limitations of the Android API, supporting a drawable was not possible. However, it was really easy to convert a drawable to a bit. You would do that using:
+
+```java
+Bitmap bitmap = BitmapFactory.decodeResources(getResources(), R.drawable.logo);
 
 ```
+
 
 Credits
 -----------------
@@ -57,7 +106,7 @@ Author: Vinay Gaba (vinaygaba@gmail.com)
 License
 -------
 
-    Copyright 2015 Vinay Gaba
+    Copyright 2017 Vinay Gaba
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
