@@ -1,4 +1,4 @@
-RubberStamp:mailbox:
+RubberStamp :mailbox:
 ================
 
 ![Feature Image](images/FeatureImage.png)
@@ -69,21 +69,78 @@ config.base(R.id.image);
 ```
 
 ##### II. `rubberStamp`
-The rubberstamp is the watermark that will be drawn on top of the base image. This can either be a bitmap or a string.
+The rubberstamp is the actual watermark that will be drawn on top of the base image. This can either be a bitmap or a string.
 
 ```java
-config.rubberStamp("Watermark");
+// String watermark
+config.rubberStamp("Watermark" );
 
+// Bitmap watermarkBitmap
 config.rubberStamp(bitmap);
 ```
 
-Due to limitations of the Android API, supporting a drawable was not possible. However, it was really easy to convert a drawable to a bit. You would do that using:
+If you want to use a drawable, convert it to a bitmap and use that. You would do that using:
 
 ```java
 Bitmap bitmap = BitmapFactory.decodeResources(getResources(), R.drawable.logo);
 
 ```
 
+##### III. `rubberStampPosition`
+The library provides 9 pre defined positions to display the location of the rubberstamp. They are as follows:
+
+TOP_LEFT<br/>
+TOP_CENTER<br/>
+TOP_RIGHT<br/>
+BOTTOM_LEFT<br/>
+BOTTOM_CENTER<br/>
+BOTTOM_RIGHT<br/>
+CENTER_LEFT<br/>
+CENTER<br/>
+CENTER_RIGHT<br/>
+
+```java
+// RubberStampPosition position
+config.rubberStampPosition(RubberStampPosition.TOP_LEFT);
+
+```
+
+In additon, if you would like to specify the exact position of the rubberstamp, you can pass the the RubberStampPosition to be `CUSTOM` and use the following constructor to specify the position.
+
+```java
+// RubberStampPosition position, int xCoordinate, int yCoordinate
+config.rubberStampPosition(RubberStampPosition.CUSTOM, 100, 100);
+```
+
+There is another special position, `TILE` that you can use in order to tile the rubberstamp across the base image.
+This is a fairly common use case for watermarking software so it made sense for the library
+to support it. You can use it in the following way:
+
+```java
+// RubberStampPosition position
+config.rubberStampPosition(RubberStampPosition.TILE);
+```
+
+##### IV. `alpha`
+
+Use alpha to change the opacity of your rubberstamp. It accepts an int value between 0 and 255.
+
+```java
+//int alpha
+config.alpha(255);
+```
+
+##### V. `rotation`
+
+Rotation does exactly what you'd imagine it to: it rotates your rubberstamp. It expects a float value
+to be passed to it.
+
+```java
+config.rotation(45);
+config.rotation(-45);
+```
+
+##### VI. `shader`
 
 Credits
 -----------------
