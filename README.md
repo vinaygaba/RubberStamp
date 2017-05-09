@@ -140,7 +140,65 @@ config.rotation(45);
 config.rotation(-45);
 ```
 
-##### VI. `shader`
+### Text RubberStamp specific attributes
+
+There are some additional attributes that this library provides when you pass a String as the RubberStamp.
+These attributes won't have any side effects when you pass a bitmap as a rubberstamp and will be disregarded.
+Most of them are pretty self explanatory.
+
+##### VI. `textColor`
+
+Sets the text color of the rubberstamp.
+```java
+config.textColor(Color.Red);
+```
+
+##### VII. `textBackgroundColor`
+
+This lets you specify a background color for your text rubberstamp.
+
+<b>Note</b> This attribute does not work when the position is set to RubberStampPosition.TILE
+
+```java
+//int color
+config.textBackgroundColor(Color.WHITE);
+```
+
+##### VIII. `textSize`
+Sets the size of the text rubberstamp.
+
+```java
+//int size
+config.textSize(40);
+```
+
+##### VIII. `textShader`
+
+This lets you specify a custom shader that you can use to customize the watermark.
+Honestly, the sky is the limit when it comes to Shaders. Here is an example shader that
+paints my watermark in rainbow colors.
+
+```java
+RubberStamp rubberStamp = new RubberStamp(this);
+int[] rainbow = {Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA};
+Shader shader = new LinearGradient(0, 0, 0, logo.getWidth(), rainbow,
+        null, Shader.TileMode.MIRROR);
+Matrix matrix = new Matrix();
+matrix.setRotate(90);
+shader.setLocalMatrix(matrix);
+
+//set the shader
+config.textShader(shader);
+```
+
+##### IX. `textShadow`
+This lets you specify a shadow for your text rubberstamp.
+<b>Note:</b> No shadow will be displayed if the blur radius is set to 0. This is how the paint
+API in Android behaves underneath as well.
+```java
+//float blurRadius, float xOffset, float yOffset, int color
+config.textShadow(1.0f, 5, 5, Color.BLUE);
+```
 
 Credits
 -----------------
