@@ -1,6 +1,28 @@
 <resources>
-    <string name="app_name">Sample</string>
+    <string name="app_name">RubberStamp</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="text_rubberstamp">Text RubberStamp</string>
+    <string name="bitmap_rubberstamp">Bitmap RubberStamp</string>
+    <string name="generate_rubberstamp">Generate RubberStamp</string>
+    <string name="position_prompt">Choose a Position</string>
+    <string name="rubber_stamp_position_label">RubberStamp Position</string>
+    <string name="alpha_label">Alpha</string>
+    <string name="rotation_label">Rotation</string>
+
+    <string-array name="position_array">
+        <item>Top Left</item>
+        <item>Top Center</item>
+        <item>Top Right</item>
+        <item>Center Left</item>
+        <item>Center</item>
+        <item>Center Right</item>
+        <item>Bottom Left</item>
+        <item>Bottom Center</item>
+        <item>Bottom Right</item>
+        <item>Custom</item>
+        <item>Tile</item>
+    </string-array>
+
 </resources>

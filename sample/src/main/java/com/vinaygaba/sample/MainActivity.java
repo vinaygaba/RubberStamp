@@ -11,11 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 
 import com.vinaygaba.rubberstamp.RubberStamp;
 import com.vinaygaba.rubberstamp.RubberStampConfig;
-import com.vinaygaba.rubberstamp.RubberStampConfig.RubberStampConfigBuilder;
 import com.vinaygaba.rubberstamp.RubberStampPosition;
 
 import rx.Observable;
@@ -27,20 +31,24 @@ import rx.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "Sample";
-    ImageView imageView;
+    ImageView mImageView;
+    RadioGroup mRadioGroup;
+    Bitmap mBaseBitmap;
+    Button mGenerateButton;
+    SeekBar mAlphaSeekBar;
+    SeekBar mRotationSeekBar;
+    Spinner mRubberStampPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        imageView = (ImageView)findViewById(R.id.imageView);
+        init();
+        setListeners();
 
         Bitmap logo = BitmapFactory.decodeResource(getResources(),
                 R.drawable.logo);
-        Bitmap lenna = BitmapFactory.decodeResource(getResources(),
-                R.drawable.lenna);
 
-        RubberStamp rubberStamp = new RubberStamp(this);
         int[] rainbow = {Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA};
         Shader shader = new LinearGradient(0, 0, 0, logo.getWidth(), rainbow,
                 null, Shader.TileMode.MIRROR);
@@ -49,14 +57,48 @@ public class MainActivity extends AppCompatActivity {
         matrix.setRotate(90);
         shader.setLocalMatrix(matrix);
 
-        RubberStampConfig config = new RubberStampConfigBuilder()
-                .base(lenna)
+    }
+
+    public void init() {
+        mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        mImageView = (ImageView) findViewById(R.id.imageView);
+        mBaseBitmap = BitmapFactory.decodeResource(getResources(),
+                R.drawable.lenna);
+        mGenerateButton = (Button) findViewById(R.id.generateRubberStamp);
+        mAlphaSeekBar = (SeekBar) findViewById(R.id.alphaSeekBar);
+        mRotationSeekBar = (SeekBar) findViewById(R.id.rotationSeekBar);
+        mRubberStampPosition = (Spinner) findViewById(R.id.rubberStampPositions);
+    }
+
+    public void setListeners() {
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+            }
+        });
+
+        mGenerateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateRubberStamp();
+            }
+        });
+    }
+
+    public void generateRubberStamp() {
+
+        int alpha = mAlphaSeekBar.getProgress();
+        int rotation = mRotationSeekBar.getProgress();
+        RubberStampPosition rubberStampPosition = convertToRubberStampPosition(mRubberStampPosition.getSelectedItemPosition());
+
+        RubberStamp rubberStamp = new RubberStamp(this);
+        RubberStampConfig config = new RubberStampConfig.RubberStampConfigBuilder()
+                .base(mBaseBitmap)
+                .alpha(alpha)
+                .rotation(rotation)
+                .rubberStampPosition(rubberStampPosition)
                 .rubberStamp("Watermark")
-                .textColor(Color.RED)
-                .textShadow(0.1f,  5, 5, Color.MAGENTA)
-                .alpha(255)
-                .rotation(-45)
-                .rubberStampPosition(RubberStampPosition.CENTER)
                 .build();
 
         Observable<Bitmap> observable = getBitmap(rubberStamp, config);
@@ -66,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Action1<Bitmap>() {
                     @Override
                     public void call(Bitmap bitmap) {
-                        imageView.setImageBitmap(bitmap);
+                        mImageView.setImageBitmap(bitmap);
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -74,6 +116,34 @@ public class MainActivity extends AppCompatActivity {
                         Log.e(TAG, throwable.getMessage());
                     }
                 });
+    }
+
+    private RubberStampPosition convertToRubberStampPosition(int selectedItemPosition) {
+        switch (selectedItemPosition) {
+            case 0: return RubberStampPosition.TOP_LEFT;
+
+            case 1: return RubberStampPosition.TOP_CENTER;
+
+            case 2: return RubberStampPosition.TOP_RIGHT;
+
+            case 3: return RubberStampPosition.CENTER_LEFT;
+
+            case 4: return RubberStampPosition.CENTER;
+
+            case 5: return RubberStampPosition.CENTER_RIGHT;
+
+            case 6: return RubberStampPosition.BOTTOM_LEFT;
+
+            case 7: return RubberStampPosition.BOTTOM_CENTER;
+
+            case 8: return RubberStampPosition.BOTTOM_RIGHT;
+
+            case 9: return RubberStampPosition.CUSTOM;
+
+            case 10: return RubberStampPosition.TILE;
+
+            default: return RubberStampPosition.CENTER;
+        }
     }
 
     public Observable<Bitmap> getBitmap(final RubberStamp rubberStamp,
