@@ -12,8 +12,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     SeekBar mAlphaSeekBar;
     SeekBar mRotationSeekBar;
     Spinner mRubberStampPosition;
+    ViewStub mViewStub;
+    LinearLayout mLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +72,17 @@ public class MainActivity extends AppCompatActivity {
         mAlphaSeekBar = (SeekBar) findViewById(R.id.alphaSeekBar);
         mRotationSeekBar = (SeekBar) findViewById(R.id.rotationSeekBar);
         mRubberStampPosition = (Spinner) findViewById(R.id.rubberStampPositions);
+        mViewStub = (ViewStub) findViewById(R.id.viewStub);
+        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout);
     }
 
     public void setListeners() {
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
+                if(checkedId == R.id.textRubberStamp) {
+                    getLayoutInflater().inflate(R.layout.text_rubberstamp_layout, mLinearLayout, true);
+                }
             }
         });
 
@@ -90,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
         int alpha = mAlphaSeekBar.getProgress();
         int rotation = mRotationSeekBar.getProgress();
-        RubberStampPosition rubberStampPosition = convertToRubberStampPosition(mRubberStampPosition.getSelectedItemPosition());
+        RubberStampPosition rubberStampPosition =
+                convertToRubberStampPosition(mRubberStampPosition.getSelectedItemPosition());
 
         RubberStamp rubberStamp = new RubberStamp(this);
         RubberStampConfig config = new RubberStampConfig.RubberStampConfigBuilder()

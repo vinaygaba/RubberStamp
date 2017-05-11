@@ -10,8 +10,26 @@
     <string name="rubber_stamp_position_label">RubberStamp Position</string>
     <string name="alpha_label">Alpha</string>
     <string name="rotation_label">Rotation</string>
+    <string name="text_size_label">Text Size</string>
+    <string name="rubberstamp_text">Enter RubberStamp Text</string>
+    <string name="text_font">Text Font</string>
+    <string name="font_prompt">Choose a Font</string>
 
     <string-array name="position_array">
+        <item>Top Left</item>
+        <item>Top Center</item>
+        <item>Top Right</item>
+        <item>Center Left</item>
+        <item>Center</item>
+        <item>Center Right</item>
+        <item>Bottom Left</item>
+        <item>Bottom Center</item>
+        <item>Bottom Right</item>
+        <item>Custom</item>
+        <item>Tile</item>
+    </string-array>
+
+    <string-array name="fonts_array">
         <item>Top Left</item>
         <item>Top Center</item>
         <item>Top Right</item>

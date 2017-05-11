@@ -23,9 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
+        android:layout_above="@+id/generateRubberStamp"
         >
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -48,6 +50,10 @@
                     android:text="@string/bitmap_rubberstamp"/>
             </RadioGroup>
             <include layout="@layout/common_rubberstamp_attributes" />
+            <ViewStub
+                android:id="@+id/viewStub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
     </LinearLayout>
     </ScrollView>
 
