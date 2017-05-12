@@ -50,10 +50,15 @@
                     android:text="@string/bitmap_rubberstamp"/>
             </RadioGroup>
             <include layout="@layout/common_rubberstamp_attributes" />
-            <ViewStub
-                android:id="@+id/viewStub"
+            <LinearLayout
+                android:id="@+id/textLayoutWrapper"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+                <include layout="@layout/text_rubberstamp_layout" />
+            </LinearLayout>
     </LinearLayout>
     </ScrollView>
 

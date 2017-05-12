@@ -14,6 +14,9 @@
     <string name="rubberstamp_text">Enter RubberStamp Text</string>
     <string name="text_font">Text Font</string>
     <string name="font_prompt">Choose a Font</string>
+    <string name="shader">Shader</string>
+    <string name="text_color">Text Color</string>
+    <string name="text_background">Text Background</string>
 
     <string-array name="position_array">
         <item>Top Left</item>
