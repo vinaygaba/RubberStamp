@@ -1,3 +1,4 @@
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -5,10 +6,60 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_image_height"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerInside"
         />
+
+    <Button
+        android:id="@+id/generateRubberStamp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/generate_rubberstamp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_above="@+id/generateRubberStamp"
+        >
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                >
+                <RadioButton
+                    android:id="@+id/textRubberStamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_rubberstamp"/>
+                <RadioButton
+                    android:id="@+id/bitmapRubberStamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bitmap_rubberstamp"/>
+            </RadioGroup>
+            <include layout="@layout/common_rubberstamp_attributes" />
+            <LinearLayout
+                android:id="@+id/textLayoutWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+                <include layout="@layout/text_rubberstamp_layout" />
+            </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

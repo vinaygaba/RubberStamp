@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/rubberStampEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/rubberstamp_text"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_size_label"
+        android:textAllCaps="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        />
+    <SeekBar
+        android:id="@+id/textSizeSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="200"
+        android:progress="30"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_font"
+        android:textAllCaps="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        />
+    <Spinner
+        android:id="@+id/textFonts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/fonts_array"
+        android:prompt="@string/font_prompt"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:weightSum="3"
+        android:layout_margin="@dimen/activity_horizontal_margin">
+        <Switch
+            android:id="@+id/shaderSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shader"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/textColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_color"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/circle"
+            android:drawableRight="@drawable/circle"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"/>
+        <TextView
+            android:id="@+id/textBackgroundColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_background"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/circle"
+            android:drawableRight="@drawable/circle"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"/>
+    </LinearLayout>
+
+
+</merge>

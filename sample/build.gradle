@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.vinaygaba.sample"
-        minSdkVersion 9
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -24,5 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.pes.materialcolorpicker:library:1.1.+'
     compile project(':library')
 }
