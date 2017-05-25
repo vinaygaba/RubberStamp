@@ -127,6 +127,8 @@ public class RubberStamp {
             positionY = pair.second;
         }
 
+        positionX += config.getXMargin();
+        positionY += config.getYMargin();
 
         float rotation = config.getRotation();
         if (rotation != 0.0f) {
@@ -189,6 +191,9 @@ public class RubberStamp {
             positionX = pair.first;
             positionY = pair.second - rubberStampBitmap.getHeight();
         }
+
+        positionX += config.getXMargin();
+        positionY += config.getYMargin();
 
         float rotation = config.getRotation();
         if (rotation != 0.0f) {
