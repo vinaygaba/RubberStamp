@@ -174,7 +174,7 @@ public class RubberStampConfig {
             return this;
         }
 
-        public RubberStampConfigBuilder typeFacePath(final String typeFacePath) {
+        public RubberStampConfigBuilder textFont(final String typeFacePath) {
             this.mTypeFacePath = typeFacePath;
             return this;
         }

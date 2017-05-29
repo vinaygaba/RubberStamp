@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                     .textColor(mTextColorValue)
                     .textBackgroundColor(mTextBackgroundColorValue)
                     .textShader(shader)
-                    .typeFacePath(path)
+                    .textFont(path)
                     .textSize(mTextSizeSeekBar.getProgress())
                     .build();
         }
