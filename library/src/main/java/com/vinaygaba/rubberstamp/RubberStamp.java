@@ -148,9 +148,9 @@ public class RubberStamp {
                 Paint backgroundPaint = new Paint();
                 backgroundPaint.setColor(backgroundColor);
                 canvas.drawRect(positionX - BACKGROUND_MARGIN,
-                        positionY - bounds.height() - BACKGROUND_MARGIN,
-                        (positionX + rubberStampMeasuredWidth + BACKGROUND_MARGIN),
-                        positionY + BACKGROUND_MARGIN,
+                        positionY - bounds.height() - paint.getFontMetrics().descent - BACKGROUND_MARGIN,
+                        (positionX + rubberStampMeasuredWidth + config.getTextShadowXOffset() + BACKGROUND_MARGIN),
+                        positionY + config.getTextShadowYOffset() + paint.getFontMetrics().descent + BACKGROUND_MARGIN,
                         backgroundPaint);
             }
             canvas.drawText(rubberStampString, positionX , positionY, paint);
