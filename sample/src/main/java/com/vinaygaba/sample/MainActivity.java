@@ -45,10 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup mRadioGroup;
     private Bitmap mBaseBitmap;
     private Button mGenerateButton;
-    private SeekBar mAlphaSeekBar;
-    private SeekBar mRotationSeekBar;
-    private SeekBar mTextSizeSeekBar;
-    private Spinner mRubberStampPosition;
+    private SeekBar mAlphaSeekBar, mRotationSeekBar, mTextSizeSeekBar;
+    private Spinner mRubberStampPosition, mTextFonts;
     private LinearLayout mTextLayoutWrapper;
     private TextView mTextColor, mTextBackgroundColor;
     private EditText mRubberStampText;
@@ -77,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         mRotationSeekBar = (SeekBar) findViewById(R.id.rotationSeekBar);
         mTextSizeSeekBar = (SeekBar) findViewById(R.id.textSizeSeekBar);
         mRubberStampPosition = (Spinner) findViewById(R.id.rubberStampPositions);
+        mTextFonts = (Spinner) findViewById(R.id.textFonts);
         mTextLayoutWrapper = (LinearLayout) findViewById(R.id.textLayoutWrapper);
         mTextColor = (TextView) findViewById(R.id.textColor);
         mTextBackgroundColor = (TextView) findViewById(R.id.textBackgroundColor);
@@ -167,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                     .rubberStampPosition(rubberStampPosition)
                     .build();
         } else {
+            String path = convertFontPositionToPath(mTextFonts.getSelectedItemPosition());
             Shader shader = getShader();
             config = new RubberStampConfig.RubberStampConfigBuilder()
                     .base(mBaseBitmap)
@@ -177,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
                     .textColor(mTextColorValue)
                     .textBackgroundColor(mTextBackgroundColorValue)
                     .textShader(shader)
+                    .typeFacePath(path)
                     .textSize(mTextSizeSeekBar.getProgress())
                     .build();
         }
@@ -224,6 +225,16 @@ public class MainActivity extends AppCompatActivity {
             case 10: return RubberStampPosition.TILE;
 
             default: return RubberStampPosition.CENTER;
+        }
+    }
+
+    public String convertFontPositionToPath(int position) {
+        String basePath = "fonts/";
+        switch (position) {
+            case 0: return basePath + "bebasneue.otf";
+            case 1: return basePath + "caviardreams.ttf";
+            case 2: return basePath + "champagne.ttf";
+            default: return basePath + "bebasneue.otf";
         }
     }
 
