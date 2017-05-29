@@ -33,17 +33,9 @@
     </string-array>
 
     <string-array name="fonts_array">
-        <item>Top Left</item>
-        <item>Top Center</item>
-        <item>Top Right</item>
-        <item>Center Left</item>
-        <item>Center</item>
-        <item>Center Right</item>
-        <item>Bottom Left</item>
-        <item>Bottom Center</item>
-        <item>Bottom Right</item>
-        <item>Custom</item>
-        <item>Tile</item>
+        <item>Bebas Neue</item>
+        <item>Caviar Dreams</item>
+        <item>Champagne</item>
     </string-array>
 
 </resources>
