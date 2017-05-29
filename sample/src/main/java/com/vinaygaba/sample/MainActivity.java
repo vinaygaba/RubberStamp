@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private ColorPicker mColorPicker;
     private RubberStamp mRubberStamp;
     @ColorInt private int mTextColorValue = Color.RED;
-    @ColorInt private int mTextBackgroundColorValue = Color.WHITE;
+    @ColorInt private int mTextBackgroundColorValue = Color.TRANSPARENT;
     private Switch mShaderSwitch;
 
     @Override
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
         setListeners();
+        setDefaults();
     }
 
     public void init() {
@@ -139,6 +140,12 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    public void setDefaults() {
+        Drawable background = mTextBackgroundColor.getCompoundDrawables()[2];
+        GradientDrawable gradientDrawable = (GradientDrawable) background;
+        gradientDrawable.setColor(mTextBackgroundColorValue);
     }
 
     public void generateRubberStamp() {
