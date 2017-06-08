@@ -74,10 +74,14 @@ The rubberstamp is the actual watermark that will be drawn on top of the base im
 ```java
 // String watermark
 config.rubberStamp("Watermark" );
+```
+![Screenshots](images/rubberstamp1.png)
 
+```java
 // Bitmap watermarkBitmap
 config.rubberStamp(bitmap);
 ```
+![Screenshots](images/rubberstamp2.png)
 
 If you want to use a drawable, convert it to a bitmap and use that. You would do that using:
 
@@ -101,9 +105,10 @@ CENTER_RIGHT<br/>
 
 ```java
 // RubberStampPosition position
-config.rubberStampPosition(RubberStampPosition.TOP_LEFT);
+config.rubberStampPosition(RubberStampPosition.BOTTOM_RIGHT);
 
 ```
+![Screenshots](images/rubberStampPosition.png)
 
 In additon, if you would like to specify the exact position of the rubberstamp, you can pass the the RubberStampPosition to be `CUSTOM` and use the following constructor to specify the position.
 
@@ -120,6 +125,7 @@ to support it. You can use it in the following way:
 // RubberStampPosition position
 config.rubberStampPosition(RubberStampPosition.TILE);
 ```
+![Screenshots](images/tiling.png)
 
 ##### IV. `alpha`
 
@@ -129,6 +135,7 @@ Use alpha to change the opacity of your rubberstamp. It accepts an int value bet
 //int alpha
 config.alpha(255);
 ```
+![Screenshots](images/textalpha.png)
 
 ##### V. `rotation`
 
@@ -139,21 +146,31 @@ to be passed to it.
 config.rotation(45);
 config.rotation(-45);
 ```
+![Screenshots](images/rotation.png)
 
+##### VI. `margin`
+Margin lets you specify the x & y offset for your rubberstamp after you have selected its RubberStampPosition.
+This is to give the user the ability to position his rubberstamp at a more precise location if the defaults RubberStampPosition presets are not good enough.
+
+```java
+// int xMargin, int yMargin
+config.margin(-30, 30);
+```
 ### Text RubberStamp specific attributes
 
 There are some additional attributes that this library provides when you pass a String as the RubberStamp.
 These attributes won't have any side effects when you pass a bitmap as a rubberstamp and will be disregarded.
 Most of them are pretty self explanatory.
 
-##### VI. `textColor`
+##### VII. `textColor`
 
 Sets the text color of the rubberstamp.
 ```java
-config.textColor(Color.Red);
+config.textColor(Color.parseColor("#FFB6C1"));
 ```
+![Screenshots](images/textColor.png)
 
-##### VII. `textBackgroundColor`
+##### VIII. `textBackgroundColor`
 
 This lets you specify a background color for your text rubberstamp.
 
@@ -163,16 +180,18 @@ This lets you specify a background color for your text rubberstamp.
 //int color
 config.textBackgroundColor(Color.WHITE);
 ```
+![Screenshots](images/textBackground.png)
 
-##### VIII. `textSize`
+##### IX. `textSize`
 Sets the size of the text rubberstamp.
 
 ```java
 //int size
 config.textSize(40);
 ```
+![Screenshots](images/textSize.png)
 
-##### VIII. `textShader`
+##### X. `textShader`
 
 This lets you specify a custom shader that you can use to customize the watermark.
 Honestly, the sky is the limit when it comes to Shaders. Here is an example shader that
@@ -190,8 +209,9 @@ shader.setLocalMatrix(matrix);
 //set the shader
 config.textShader(shader);
 ```
+![Screenshots](images/textShader.png)
 
-##### IX. `textShadow`
+##### XI. `textShadow`
 This lets you specify a shadow for your text rubberstamp.
 <b>Note:</b> No shadow will be displayed if the blur radius is set to 0. This is how the paint
 API in Android behaves underneath as well.
@@ -199,7 +219,15 @@ API in Android behaves underneath as well.
 //float blurRadius, float xOffset, float yOffset, int color
 config.textShadow(1.0f, 5, 5, Color.BLUE);
 ```
+![Screenshots](images/textShadow.png)
 
+##### XII. `textFont`
+Use this to specify a custom font for your text rubberstamp.
+
+```java
+//String fontpath
+config.textFont("fonts/champagne.ttf");
+```
 Credits
 -----------------
 Author: Vinay Gaba (vinaygaba@gmail.com)
