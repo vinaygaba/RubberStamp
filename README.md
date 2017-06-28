@@ -5,9 +5,7 @@ RubberStamp :mailbox:
 
 RubberStamp is an Android library that makes it easy for you to watermark your images.
 
-Screenshots
-------------
-![Screenshots](images/screenshots.png)
+![Screenshots](images/rubberstamp_sample.gif)
 
 
 Features
@@ -135,7 +133,7 @@ Use alpha to change the opacity of your rubberstamp. It accepts an int value bet
 //int alpha
 config.alpha(255);
 ```
-<img src="images/textalpha.png" width="300">
+<img src="images/textAlpha.png" width="300">
 
 ##### V. `rotation`
 

@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onColorChosen(@ColorInt int color) {
                         setColor(mTextBackgroundColor, color);
-                        mColorPicker.dismiss();
+                        mTextBackgroundColorValue = color;
                     }
                 });
                 return false;

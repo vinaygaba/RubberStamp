@@ -155,7 +155,6 @@ public class RubberStamp {
             }
             canvas.drawText(rubberStampString, positionX , positionY, paint);
         } else {
-            // TODO(vinaygaba): Improve this logic. There has to be something more intuitive
             Bitmap textImage = Bitmap.createBitmap((int)rubberStampMeasuredWidth,
                     rubberStampHeight,
                     Bitmap.Config.ARGB_8888);
