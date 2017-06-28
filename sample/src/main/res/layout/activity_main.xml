@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_image_height"
         android:layout_alignParentTop="true"
+        android:src="@drawable/lenna"
         android:scaleType="centerInside"
         />
 

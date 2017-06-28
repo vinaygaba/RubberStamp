@@ -111,11 +111,8 @@ public class MainActivity extends AppCompatActivity {
                 mColorPicker.setCallback(new ColorPickerCallback() {
                     @Override
                     public void onColorChosen(@ColorInt int color) {
-                        Drawable background = mTextColor.getCompoundDrawables()[2];
-                        GradientDrawable gradientDrawable = (GradientDrawable) background;
-                        gradientDrawable.setColor(color);
+                        setColor(mTextColor, color);
                         mTextColorValue = color;
-                        mColorPicker.dismiss();
                     }
                 });
                 return false;
@@ -129,10 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 mColorPicker.setCallback(new ColorPickerCallback() {
                     @Override
                     public void onColorChosen(@ColorInt int color) {
-                        Drawable background = mTextBackgroundColor.getCompoundDrawables()[2];
-                        GradientDrawable gradientDrawable = (GradientDrawable) background;
-                        gradientDrawable.setColor(color);
-                        mTextBackgroundColorValue = color;
+                        setColor(mTextBackgroundColor, color);
                         mColorPicker.dismiss();
                     }
                 });
@@ -154,25 +148,22 @@ public class MainActivity extends AppCompatActivity {
         RubberStampPosition rubberStampPosition =
                 convertToRubberStampPosition(mRubberStampPosition.getSelectedItemPosition());
 
+        RubberStampConfig.RubberStampConfigBuilder builder = new RubberStampConfig.RubberStampConfigBuilder()
+                .base(mBaseBitmap)
+                .alpha(alpha)
+                .rotation(rotation)
+                .rubberStampPosition(rubberStampPosition);
+
         if(mRadioGroup.getCheckedRadioButtonId() == R.id.bitmapRubberStamp) {
             Bitmap logo = BitmapFactory.decodeResource(getResources(),
                     R.drawable.logo);
-
-            config = new RubberStampConfig.RubberStampConfigBuilder()
-                    .base(mBaseBitmap)
-                    .rubberStamp(logo)
-                    .alpha(alpha)
-                    .rotation(rotation)
-                    .rubberStampPosition(rubberStampPosition)
-                    .build();
+            config = builder
+                        .rubberStamp(logo)
+                        .build();
         } else {
             String path = convertFontPositionToPath(mTextFonts.getSelectedItemPosition());
             Shader shader = getShader();
-            config = new RubberStampConfig.RubberStampConfigBuilder()
-                    .base(mBaseBitmap)
-                    .alpha(alpha)
-                    .rotation(rotation)
-                    .rubberStampPosition(rubberStampPosition)
+            config = builder
                     .rubberStamp(mRubberStampText.getText().toString())
                     .textColor(mTextColorValue)
                     .textBackgroundColor(mTextBackgroundColorValue)
@@ -282,5 +273,12 @@ public class MainActivity extends AppCompatActivity {
             return shader;
         }
         return null;
+    }
+
+    public void setColor(TextView textView, int color) {
+        Drawable background = textView.getCompoundDrawables()[2];
+        GradientDrawable gradientDrawable = (GradientDrawable) background;
+        gradientDrawable.setColor(color);
+        mColorPicker.dismiss();
     }
 }
