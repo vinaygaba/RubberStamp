@@ -37,13 +37,15 @@ First, define the characteristics of your watermark using RubberStampConfig
 RubberStampConfig config = new RubberStampConfigBuilder()
               .base(R.drawable.lenna)
               .rubberStamp("Watermark")
+              .rubberStampPosition(RubberStamp.CENTER)
               .alpha(100)
+              .margin(30, 30)
+              .rotation(-45)
               .textColor(Color.BLACK)
               .textBackgroundColor(Color.WHITE)
-              .textShadow(0.1f,  5, 5, Color.BLUE)
+              .textShadow(0.1f, 5, 5, Color.BLUE)
               .textSize(90)
-              .rotation(-45)
-              .rubberStampPosition(RubberStamp.CENTER)
+              .textFont("fonts/champagne.ttf");
               .build();
 ```
 
