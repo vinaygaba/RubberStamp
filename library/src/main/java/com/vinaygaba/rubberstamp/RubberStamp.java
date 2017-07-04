@@ -1,17 +1,17 @@
-/**
- * Copyright (C) 2017 Vinay Gaba
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+  Copyright (C) 2017 Vinay Gaba
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
  */
 
 package com.vinaygaba.rubberstamp;
@@ -26,6 +26,7 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Pair;
@@ -36,14 +37,18 @@ import static com.vinaygaba.rubberstamp.RubberStampPosition.TILE;
 
 public class RubberStamp {
 
-    static Context mContext;
-    public static final int BACKGROUND_MARGIN = 10;
+    private Context mContext;
+    private static final int BACKGROUND_MARGIN = 10;
     
-    public RubberStamp(Context context){
+    public RubberStamp(@NonNull Context context){
         mContext = context;
     }
 
-    public Bitmap addStamp(RubberStampConfig config) {
+    public Bitmap addStamp(@NonNull RubberStampConfig config) {
+        if (config == null) {
+            throw new IllegalArgumentException("The config passed to this method should never" +
+                    "be null");
+        }
         Bitmap baseBitmap = getBaseBitmap(config);
         if (baseBitmap == null) {
             return baseBitmap;
@@ -58,9 +63,7 @@ public class RubberStamp {
 
         if (!TextUtils.isEmpty(config.getRubberStampString())) {
             addTextToBitmap(config, canvas, baseBitmapWidth, baseBitmapHeight);
-        }
-
-        if (config.getRubberStampBitmap() != null) {
+        } else if (config.getRubberStampBitmap() != null) {
             addBitmapToBitmap(config.getRubberStampBitmap(), config, canvas,
                     baseBitmapWidth, baseBitmapHeight);
         }
@@ -68,7 +71,7 @@ public class RubberStamp {
     }
   
     @Nullable
-    private Bitmap getBaseBitmap(RubberStampConfig config) {
+    private Bitmap getBaseBitmap(@NonNull RubberStampConfig config) {
         Bitmap baseBitmap = config.getBaseBitmap();
         @DrawableRes int drawable = config.getBaseDrawable();
       
@@ -79,7 +82,16 @@ public class RubberStamp {
         return baseBitmap;
     }
 
-    private void addTextToBitmap(RubberStampConfig config, Canvas canvas, int baseBitmapWidth,
+    /**
+     * Method to add text RubberStamp to a canvas based on the provided configuration
+     * @param config The RubberStampConfig that specifies how the RubberStamp should look
+     * @param canvas The canvas on top of which the RubberStamp needs to be drawn
+     * @param baseBitmapWidth The width of the base bitmap
+     * @param baseBitmapHeight The height of the base bitmap
+     */
+    private void addTextToBitmap(@NonNull RubberStampConfig config,
+                                 @NonNull Canvas canvas,
+                                 int baseBitmapWidth,
                                  int baseBitmapHeight) {
         Rect bounds = new Rect();
 
@@ -168,8 +180,19 @@ public class RubberStamp {
         }    
     }
 
-    private void addBitmapToBitmap(Bitmap rubberStampBitmap, RubberStampConfig config, Canvas canvas,
-                                   int baseBitmapWidth, int baseBitmapHeight) {
+    /**
+     * Method to add a bitmap RubberStamp to a canvas based on the provided configuration
+     * @param rubberStampBitmap The bitmap which will be used as the RubberStamp
+     * @param config The RubberStampConfig that specifies how the RubberStamp should look
+     * @param canvas The canvas on top of which the RubberStamp needs to be drawn
+     * @param baseBitmapWidth The width of the base bitmap
+     * @param baseBitmapHeight The height of the base bitmap
+     */
+    private void addBitmapToBitmap(@NonNull Bitmap rubberStampBitmap,
+                                   @NonNull RubberStampConfig config,
+                                   @NonNull Canvas canvas,
+                                   int baseBitmapWidth,
+                                   int baseBitmapHeight) {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setUnderlineText(false);
