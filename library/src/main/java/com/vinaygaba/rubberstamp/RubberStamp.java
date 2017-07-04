@@ -61,6 +61,7 @@ public class RubberStamp {
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(baseBitmap, 0, 0, null);
 
+        // Either one of the methods(text/bitmap) can be used to add a rubberstamp
         if (!TextUtils.isEmpty(config.getRubberStampString())) {
             addTextToBitmap(config, canvas, baseBitmapWidth, baseBitmapHeight);
         } else if (config.getRubberStampBitmap() != null) {
@@ -102,18 +103,21 @@ public class RubberStamp {
         paint.setTextSize(config.getTextSize());
 
         String typeFacePath = config.getTypeFacePath();
+        // Add font typeface if its present in the config.
         if(!TextUtils.isEmpty(typeFacePath)) {
             Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), typeFacePath);
             paint.setTypeface(typeface);
         }
 
         Shader shader = config.getTextShader();
+        // Add shader if its present in the config.
         if (shader != null) {
             paint.setShader(shader);
         }
 
         if (config.getTextShadowXOffset() != 0 || config.getTextShadowYOffset() != 0
         || config.getTextShadowBlurRadius() != 0) {
+            // If any shadow property is present, set a shadow layer.
             paint.setShadowLayer(config.getTextShadowBlurRadius(),
                     config.getTextShadowXOffset(),
                     config.getTextShadowYOffset(),
@@ -131,6 +135,8 @@ public class RubberStamp {
         int positionY = config.getPositionY();
 
         if (config.getRubberStampPosition() != CUSTOM) {
+            // If the specified RubberStampPosition is not CUSTOM, use calculates its x & y
+            // co-ordinates.
             Pair<Integer, Integer> pair = PositionCalculator
                     .getCoordinates(config.getRubberStampPosition(),
                             baseBitmapWidth, baseBitmapHeight,
@@ -139,22 +145,31 @@ public class RubberStamp {
             positionY = pair.second;
         }
 
+        // Add the margin to this position if it was passed to the config.
         positionX += config.getXMargin();
         positionY += config.getYMargin();
 
         float rotation = config.getRotation();
+        // Add rotation if its present in the config.
         if (rotation != 0.0f) {
             canvas.rotate(rotation, positionX + bounds.exactCenterX(),
                     positionY - bounds.exactCenterY());
         }
-      
+
+        // Add the specified text color if its present in the config or it will use the default value.
         paint.setColor(config.getTextColor());
+
         int alpha = config.getAplha();
+        // Add alpha to the rubberstamp if its within range or it uses the default value.
         if (alpha >= 0 && alpha <= 255) {
             paint.setAlpha(alpha);
         }
 
         if (config.getRubberStampPosition() != TILE) {
+            // The textBackgroundColor is only used if the specified RubberStampPosition is not TILE
+            // This is because the background is actually a rectangle whose bounds are calcualted
+            // below. In the case of TILE, we make use of a bitmap shader and there was no easy way
+            // to draw the background rectangle for each tiled rubberstamp.
             int backgroundColor = config.getTextBackgroundColor();
             if (backgroundColor != 0) {
                 Paint backgroundPaint = new Paint();
@@ -167,6 +182,8 @@ public class RubberStamp {
             }
             canvas.drawText(rubberStampString, positionX , positionY, paint);
         } else {
+            // If the specified RubberStampPosition is TILE, it tiles the rubberstamp across
+            // the bitmap. In order to generate a tiled bitamp, it uses a bitmap shader.
             Bitmap textImage = Bitmap.createBitmap((int)rubberStampMeasuredWidth,
                     rubberStampHeight,
                     Bitmap.Config.ARGB_8888);
@@ -198,6 +215,7 @@ public class RubberStamp {
         paint.setUnderlineText(false);
 
         int alpha = config.getAplha();
+        // Add alpha to the rubberstamp if its within range or it uses the default value.
         if (alpha >= 0 && alpha <= 255) {
             paint.setAlpha(alpha);
         }
@@ -206,6 +224,8 @@ public class RubberStamp {
         int positionY = config.getPositionY();
         RubberStampPosition rubberStampPosition = config.getRubberStampPosition();
         if (rubberStampPosition != CUSTOM) {
+            // If the specified RubberStampPosition is not CUSTOM, use calculates its x & y
+            // co-ordinates.
             Pair<Integer, Integer> pair =
                     PositionCalculator.getCoordinates(rubberStampPosition,
                             baseBitmapWidth, baseBitmapHeight,
@@ -214,11 +234,13 @@ public class RubberStamp {
             positionY = pair.second - rubberStampBitmap.getHeight();
         }
 
+        // Add the margin to this position if it was passed to the config.
         positionX += config.getXMargin();
         positionY += config.getYMargin();
 
         float rotation = config.getRotation();
         if (rotation != 0.0f) {
+            // Add rotation if its present in the config.
             canvas.rotate(rotation, positionX + (rubberStampBitmap.getWidth() / 2),
                     positionY + (rubberStampBitmap.getHeight() / 2));
         }
@@ -226,6 +248,8 @@ public class RubberStamp {
         if (rubberStampPosition != TILE) {
             canvas.drawBitmap(rubberStampBitmap, positionX, positionY , paint);
         } else {
+            // If the specified RubberStampPosition is TILE, it tiles the rubberstamp across
+            // the bitmap. In order to generate a tiled bitamp, it uses a bitmap shader.
             paint.setShader(new BitmapShader(rubberStampBitmap,
                     Shader.TileMode.REPEAT,
                     Shader.TileMode.REPEAT));
