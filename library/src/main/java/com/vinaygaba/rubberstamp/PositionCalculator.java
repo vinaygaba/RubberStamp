@@ -27,7 +27,7 @@ public class PositionCalculator {
      * @param bitmapHeight The height of the bitmap where the rubberstamp will be drawn
      * @param rubberstampWidth The width of the rubberstamp
      * @param rubberstampHeight The height of the rubberstamp
-     * @return Returns a Pair<Integer, Integer> object which has the x-coordinate and the y-coordinate
+     * @return Returns a Pair object which has the x-coordinate and the y-coordinate
      */
     public static Pair<Integer, Integer> getCoordinates(RubberStampPosition location,
                                                         int bitmapWidth, int bitmapHeight,
